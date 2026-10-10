@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;700&display=swap');
+
+:root {
+  --bg-obsidian: #010204;
+  --velion-indigo: #3D5AFE;
+  --clinical-red: #FF1744;
+  --glass-deep: rgba(10, 15, 25, 0.7);
+}
+
+body {
+  background-color: var(--bg-obsidian);
+  color: white;
+  font-family: 'Product Sans', sans-serif;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* The Neon Pulse for Emergency SOS */
+@keyframes siren-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(255, 23, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); }
+}
+
+.emergency-pulse {
+  animation: siren-pulse 2s infinite;
+  background: rgba(255, 23, 68, 0.1) !important;
+  border: 1px solid var(--clinical-red) !important;
+}
