@@ -57,6 +57,23 @@ The concept took shape right as my first semester of Software Engineering conclu
 
 ---
 
+👨‍💻 Developer & Author
+Ahmed Nasir
+
+Software Engineering Student @ SZABIST | Design & Systems Thinking
+
+LinkedIn: linkedin.com/in/ahmednasir06
+
+GitHub: github.com/justahmed06
+
+---
+
+## 📄 License & Attribution
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for full details.
+
+Developed & Maintained by **[Ahmed Nasir](https://linkedin.com/in/ahmednasir06)** © 2026. All rights reserved.
+
 ## 🛠️ Local Development Setup
 
 To run the project locally:
