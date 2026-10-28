@@ -57,14 +57,17 @@ The concept took shape right as my first semester of Software Engineering conclu
 
 ---
 
-👨‍💻 Developer & Author
-Ahmed Nasir
+---
 
-Software Engineering Student @ SZABIST | Design & Systems Thinking
+## 👨‍💻 Developer & Author
 
-LinkedIn: linkedin.com/in/ahmednasir06
+<p align="left">
+  <b>Ahmed Nasir</b><br>
+  <i>Software Engineering Student @ SZABIST | Design & Systems Thinking</i>
+</p>
 
-GitHub: github.com/justahmed06
+- 🌐 **LinkedIn:** [linkedin.com/in/ahmednasir06](https://linkedin.com/in/ahmednasir06)
+- 💻 **GitHub:** [github.com/justahmed06](https://github.com/justahmed06)
 
 ---
 
