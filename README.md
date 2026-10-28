@@ -68,7 +68,6 @@ The concept took shape right as my first semester of Software Engineering conclu
 
 - 🌐 **LinkedIn:** [linkedin.com/in/ahmednasir06](https://linkedin.com/in/ahmednasir06)
 - 💻 **GitHub:** [github.com/justahmed06](https://github.com/justahmed06)
-
 ---
 
 ## 📄 License & Attribution
