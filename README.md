@@ -2,7 +2,24 @@
 
 > **Human-Centered Healthcare Accessibility & Medical Information Architecture**
 
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com/)
+
 PakMed is a modern web application engineered to streamline healthcare information discovery, digitize medical workflows, and bridge user accessibility gaps in local healthcare environments. Built with a focus on speed, modular system architecture, and intuitive UI/UX.
+
+---
+
+## 💡 The Story Behind PakMed
+
+The name **PakMed** holds a intentional triple-identity:
+- **Pak:** Grounded in local utility and regional healthcare accessibility for Pakistan.
+- **Med:** Focused on medical information architecture, health systems, and digitizing clinical touchpoints.
+- **Ah'med:** A subtle, personal signature embedded into the core identity of the product.
+
+### How It Started
+The concept took shape right as my first semester of Software Engineering concluded at SZABIST. Moving into the break before Semester 2, I wanted to apply emerging AI workflows and modern frontend architecture to a domain that actually matters—healthcare accessibility. What started as an exploration of state pipelines and UI responsiveness quickly evolved into a full-scale system architecture project aimed at making medical navigation intuitive, fast, and human-centered.
 
 ---
 
@@ -10,7 +27,7 @@ PakMed is a modern web application engineered to streamline healthcare informati
 
 - ⚡ **Modern Next.js Architecture:** High-performance server-side rendering and static generation built on TypeScript.
 - 🎨 **User-Centric Interface:** Clean, accessible component system designed for low-latency interactions and readability.
-- 🛡️ **Edge Deployment:** Deployed on Cloudflare Pages for high availability and low latency performance.
+- 🛡️ **Edge Deployment:** Configured for Cloudflare Pages for high availability and low latency performance.
 - 🤖 **AI-Assisted Workflows:** Structured data pipelines and intelligent medical information indexing.
 
 ---
@@ -29,10 +46,10 @@ PakMed is a modern web application engineered to streamline healthcare informati
 
 ## 📊 Project Status
 
-> ⚠️ **Development Note:** PakMed is currently under active development and system optimization. Key core features, API integrations, and database schemas are being iteratively deployed.
+> ⚠️ **Development Note:** PakMed is currently under active development. Core features, API integrations, and user flow optimizations are being iteratively deployed.
 
 ### Roadmap
-- [x] Repository Configuration & Environment Infrastructure
+- [x] Repository Configuration & Infrastructure Setup
 - [x] UI/UX Component System & Responsive Layout Engine
 - [ ] Medical Information & Directory Indexing
 - [ ] Localized Search & State Pipeline Integration
@@ -46,10 +63,10 @@ To run the project locally:
 
 ```bash
 # Clone the repository
-git clone [https://github.com/justahmed06/pakmed.git](https://github.com/justahmed06/pakmed.git)
+git clone [https://github.com/justahmed06/PakMed.git](https://github.com/justahmed06/PakMed.git)
 
 # Navigate into the directory
-cd pakmed
+cd PakMed
 
 # Install dependencies
 npm install
