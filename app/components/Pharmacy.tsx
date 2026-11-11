@@ -40,12 +40,12 @@ export default function Pharmacy() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%' }}>
 
       {/* HEADER (Animated Gradient) */}
-      <header className="glass-card bg-slate-900/40 backdrop-blur-2xl border border-white/10 border-t-white/25 border-b-white/5 shadow-[0_16px_40px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-3xl" style={{ padding: '20px', textAlign: 'center', flexShrink: 0 }}>
+      <header className="glass-card bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl" style={{ padding: '20px', textAlign: 'center', flexShrink: 0 }}>
         <h1 className="sovereign-text">PHARMACY DISPATCH</h1>
       </header>
 
       {/* ⌨️ INPUT CONSOLE */}
-      <div className="glass-card bg-slate-900/40 backdrop-blur-2xl border border-white/10 border-t-white/25 border-b-white/5 shadow-[0_16px_40px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-3xl" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, minHeight: 0 }}>
+      <div className="glass-card bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, minHeight: 0 }}>
 
         {/* Row 1: Medicine Input */}
         <div>
@@ -114,9 +114,11 @@ export default function Pharmacy() {
                 <button
                   key={v.name}
                   onClick={() => setSelectedVendor(v)}
+                  className="vendor-badge bg-slate-800/50 border border-white/10 hover:border-cyan-500/50"
                   style={{
-                    padding: '10px 5px', borderRadius: '8px', border: selectedVendor.name === v.name ? `1px solid ${v.color}` : '1px solid rgba(255,255,255,0.05)',
-                    background: selectedVendor.name === v.name ? `${v.color}20` : 'rgba(255,255,255,0.02)',
+                    padding: '10px 5px',
+                    border: selectedVendor.name === v.name ? `1px solid ${v.color}` : undefined,
+                    background: selectedVendor.name === v.name ? `${v.color}20` : undefined,
                     color: selectedVendor.name === v.name ? 'white' : '#64748B',
                     cursor: 'pointer', fontSize: '0.65rem', fontWeight: 'bold', transition: '0.2s',
                     whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
@@ -130,7 +132,7 @@ export default function Pharmacy() {
         </div>
 
         {/* 🚀 LAUNCH BUTTON (Compact) */}
-        <button onClick={handleDispatch} className="dispatch-btn">
+        <button onClick={handleDispatch} className="dispatch-btn bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/20">
           <span>QUERY {selectedVendor.name} ➔</span>
         </button>
 
@@ -158,13 +160,15 @@ export default function Pharmacy() {
 
         .qty-btn { background: rgba(255,255,255,0.05); border: none; color: white; border-radius: 8px; cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
         .qty-btn:hover { background: rgba(255,255,255,0.15); }
+        .vendor-badge { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .vendor-badge:hover { border-color: rgba(6, 182, 212, 0.5); }
         
-        .dispatch-btn { 
-          padding: 18px; background: #3D5AFE; color: white; border: none; 
-          border-radius: 12px; fontWeight: bold; font-size: 0.9rem; letter-spacing: 2px; cursor: pointer; 
-          transition: 0.3s; box-shadow: 0 0 20px rgba(61, 90, 254, 0.2); width: 100%;
+        .dispatch-btn {
+          padding: 18px; background: linear-gradient(to right, #06B6D4, #2563EB); color: #0F172A; border: none;
+          border-radius: 12px; font-weight: bold; font-size: 0.9rem; letter-spacing: 2px; cursor: pointer;
+          transition: 0.3s; box-shadow: 0 10px 25px rgba(6, 182, 212, 0.2); width: 100%;
         }
-        .dispatch-btn:hover { background: #2945FF; transform: translateY(-2px); box-shadow: 0 0 35px rgba(61, 90, 254, 0.5); }
+        .dispatch-btn:hover { background: linear-gradient(to right, #22D3EE, #3B82F6); transform: translateY(-2px); box-shadow: 0 0 35px rgba(6, 182, 212, 0.35); }
       `}</style>
     </div>
   );

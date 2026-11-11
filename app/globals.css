@@ -54,11 +54,11 @@ body {
 }
 
 .backdrop-blur-xl {
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px) saturate(135%);
 }
 
 .backdrop-blur-2xl {
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px) saturate(130%);
 }
 
 .blur-3xl {

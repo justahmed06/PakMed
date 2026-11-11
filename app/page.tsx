@@ -57,7 +57,7 @@ export default function PakMedOS() {
         </div>
       </aside>
 
-      <main className="viewport liquid-surface rounded-none bg-white/[0.03] dark:bg-slate-900/40 backdrop-blur-2xl border border-white/20 border-t-white/40 border-b-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-1px_1px_rgba(0,0,0,0.4)]">
+      <main className="viewport liquid-surface rounded-none bg-white/[0.03] dark:bg-slate-900/40 backdrop-blur-2xl border border-white/10 border-t-white/20 border-b-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-1px_1px_rgba(0,0,0,0.4)]">
         {activeTab === 'diagnosis' && <Diagnosis />}
         {activeTab === 'vitals' && <Vitals />}
         {activeTab === 'pharmacy' && <Pharmacy />}

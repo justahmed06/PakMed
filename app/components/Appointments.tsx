@@ -136,7 +136,7 @@ export default function Appointments() {
   };
 
   return (
-    <div style={{ height: '100%', display: 'flex', gap: '25px', position: 'relative' }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '25px', position: 'relative', overflowY: 'auto' }}>
 
       {/* 📋 SIDEBAR */}
       <div className="glass-card" style={{ flex: 1, padding: '30px', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
@@ -171,14 +171,11 @@ export default function Appointments() {
           ))}
         </div>
 
-        <button onClick={handleLocate} style={{ marginTop: 'auto', padding: '15px', background: '#3D5AFE', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
-          <span>📍</span> RE-CALIBRATE GPS
-        </button>
       </div>
 
       {/* 🗺️ MAP CANVAS */}
-      <div className="glass-card map-container" style={{ flex: 2, borderRadius: '40px', overflow: 'hidden', position: 'relative' }}>
-        <MapContainer center={ANCHOR_BAHADURABAD} zoom={13} style={{ height: '100%', width: '100%' }} zoomControl={false}>
+      <div className="glass-card map-container w-full h-[600px] rounded-3xl overflow-hidden border border-white/10 relative" style={{ width: '100%', height: '600px', flex: 'none' }}>
+        <MapContainer className="w-full h-full" center={ANCHOR_BAHADURABAD} zoom={13} style={{ height: '100%', width: '100%' }} zoomControl={false}>
           <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
           {nearby.map((h, i) => (
             <Marker key={i} position={h.coords as [number, number]} icon={sovereignIcon}>
@@ -194,6 +191,12 @@ export default function Appointments() {
           {/* THE LOGIC ENGINE */}
           <MapEffect targetCoords={targetPos} userCoords={userPos} setNearby={setNearby} setLoading={setLoading} />
         </MapContainer>
+        <button
+          onClick={handleLocate}
+          className="absolute bottom-6 right-6 z-10 bg-slate-900/80 backdrop-blur-md border border-white/10 text-cyan-400 radar-recalibrate"
+        >
+          <span>📍</span> RE-CALIBRATE GPS
+        </button>
       </div>
 
       {/* 🗓️ BOOKING MODAL */}
@@ -203,6 +206,14 @@ export default function Appointments() {
 
       <style jsx global>{`
         .leaflet-container { background: #0A0E1A; font-family: var(--font-product-sans), sans-serif; }
+        .map-container { width: 100%; height: 600px; }
+        .radar-recalibrate {
+          padding: 15px;
+          border-radius: 12px;
+          font-weight: bold;
+          cursor: pointer;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
         .hospital-item:hover { background: rgba(61,90,254,0.1) !important; transform: translateX(5px); border-color: #3D5AFE !important; }
       `}</style>
     </div>
