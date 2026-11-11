@@ -136,10 +136,10 @@ export default function Appointments() {
   };
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '25px', position: 'relative', overflowY: 'auto' }}>
+    <div className="radar-layout flex flex-col lg:flex-row gap-4 w-full h-[calc(100vh-120px)] p-4" style={{ height: 'calc(100vh - 120px)', display: 'flex', flexDirection: 'row', gap: '16px', width: '100%', padding: '16px', position: 'relative' }}>
 
       {/* 📋 SIDEBAR */}
-      <div className="glass-card bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl p-6" style={{ flex: 1, padding: '30px', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+      <div className="glass-card radar-sidebar w-full lg:w-[380px] h-full overflow-y-auto bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex flex-col gap-3 custom-scrollbar" style={{ width: '380px', height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto', flex: 'none' }}>
         <h2 className="text-cyan-400 font-semibold tracking-wider" style={{ fontSize: '0.7rem', marginBottom: '20px' }}>
           {loading ? 'SCANNING SECTOR...' : 'LIVE RADAR RESULTS'}
         </h2>
@@ -175,11 +175,11 @@ export default function Appointments() {
       </div>
 
       {/* 🗺️ MAP CANVAS */}
-      <div className="glass-card w-full h-[650px] max-w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative bg-slate-900/40 backdrop-blur-xl map-container" style={{ width: '100%', height: '650px', flex: 'none' }}>
-        <MapContainer className="w-full h-full" center={ANCHOR_BAHADURABAD} zoom={13} style={{ width: '100%', height: '100%', minHeight: '600px' }} zoomControl={false}>
+      <div className="glass-card radar-map-panel flex-1 h-full min-h-[500px] bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden relative" style={{ flex: 1, width: 'auto', height: '100%', minHeight: '500px' }}>
+        <MapContainer className="w-full h-full min-h-full z-0" center={ANCHOR_BAHADURABAD} zoom={13} style={{ height: '100%', width: '100%' }} zoomControl={false}>
           <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
           />
           {nearby.map((h, i) => (
             <Marker key={i} position={h.coords as [number, number]} icon={sovereignIcon}>
@@ -210,7 +210,15 @@ export default function Appointments() {
 
       <style jsx global>{`
         .leaflet-container { background: #0A0E1A; font-family: var(--font-product-sans), sans-serif; }
-        .map-container { width: 100%; height: 650px; }
+        .radar-layout { box-sizing: border-box; }
+        .radar-sidebar { box-sizing: border-box; }
+        .radar-map-panel { box-sizing: border-box; }
+        .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(148, 163, 184, 0.45) transparent; }
+        @media (max-width: 1023px) {
+          .radar-layout { height: auto; flex-direction: column !important; overflow-y: auto; }
+          .radar-sidebar { width: 100% !important; height: auto; max-height: 420px; }
+          .radar-map-panel { width: 100%; min-height: 500px; height: 650px; flex: none; }
+        }
         .radar-recalibrate {
           cursor: pointer;
         }
