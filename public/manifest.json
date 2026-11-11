@@ -1,0 +1,10 @@
+{
+  "name": "PakMed",
+  "short_name": "PakMed",
+  "description": "Next-Generation Medical Operating System",
+  "start_url": "/",
+  "scope": "/",
+  "theme_color": "#0284c7",
+  "background_color": "#020617",
+  "display": "standalone"
+}
