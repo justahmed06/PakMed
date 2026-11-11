@@ -32,12 +32,12 @@ export default function Diagnosis() {
       
       {/* 🔮 REFINED AMBIENT GRADIENT LOGO */}
       <div className="branding-deck">
-        <h1 className="photon-logo">
+        <h1 className="photon-logo font-sans tracking-[0.2em] font-bold">
           {letters.map((char, i) => (
             <span key={i} className="letter" style={{ animationDelay: `${i * 0.15}s` }}>{char}</span>
           ))}
         </h1>
-        <p className="who-text">WHO ICD-11 TAXONOMY COMPLIANT</p>
+        <p className="who-text font-sans tracking-[0.2em] font-bold">WHO ICD-11 TAXONOMY COMPLIANT</p>
       </div>
 
       {/* 💬 PREMIUM GLASS PILL CONSOLE */}
@@ -85,14 +85,14 @@ export default function Diagnosis() {
         /* ❄️ SEQUENTIAL PHOTON PULSE */
         .photon-logo { display: flex; gap: 4px; justify-content: center; margin: 0; }
         .letter {
-          font-size: 5.5rem; font-weight: 900; letter-spacing: 2px;
+          font-size: 5.5rem;
           color: #E0FFFF;
           text-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
           animation: photon-flow 4s infinite ease-in-out;
           will-change: color, text-shadow; 
         }
 
-        .who-text { color: #00E5FF; font-size: 0.65rem; font-weight: 800; letter-spacing: 8px; margin-top: 15px; opacity: 0.8; text-shadow: 0 0 15px rgba(0, 229, 255, 0.4); }
+        .who-text { color: #00E5FF; font-size: 0.65rem; margin-top: 15px; opacity: 0.8; text-shadow: 0 0 15px rgba(0, 229, 255, 0.4); }
 
         /* 💬 HEAVY GLASSMORPHISM */
         .glass-console {
@@ -107,7 +107,7 @@ export default function Diagnosis() {
         .glass-console:focus-within { border-color: rgba(0, 229, 255, 0.5); box-shadow: 0 0 40px rgba(0, 229, 255, 0.2); }
         .listening-active { border-color: #00E5FF; animation: console-breathe 2s infinite ease-in-out; }
 
-        .input-field { flex: 1; background: transparent; border: none; color: white; outline: none; font-size: 1.1rem; font-family: 'Product Sans', sans-serif; }
+        .input-field { flex: 1; background: transparent; border: none; color: white; outline: none; font-size: 1.1rem; font-family: var(--font-product-sans), sans-serif; }
         .action-row { display: flex; align-items: center; gap: 12px; }
         .tool-btn { background: none; border: none; color: #94A3B8; cursor: pointer; padding: 6px; transition: 0.2s; }
         .tool-btn:hover { color: #00E5FF; }

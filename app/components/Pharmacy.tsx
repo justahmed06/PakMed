@@ -57,7 +57,7 @@ export default function Pharmacy() {
             style={{
               width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(61,90,254,0.3)',
               color: 'white', fontSize: '1.2rem', padding: '15px', borderRadius: '12px', outline: 'none',
-              fontFamily: '"Product Sans", sans-serif'
+              fontFamily: 'var(--font-product-sans), sans-serif'
             }}
           />
           {matchingMedicines.length > 0 && (

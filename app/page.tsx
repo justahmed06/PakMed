@@ -63,12 +63,7 @@ export default function PakMedOS() {
       </main>
 
       <style jsx global>{`
-        @font-face {
-          font-family: 'Product Sans';
-          src: local('Product Sans'), local('Google Sans');
-        }
-
-        .os-frame { display: flex; height: 100vh; background: #010204; color: white; position: relative; overflow: hidden; font-family: 'Product Sans', sans-serif; }
+        .os-frame { display: flex; height: 100vh; background: #010204; color: white; position: relative; overflow: hidden; font-family: var(--font-product-sans), sans-serif; }
         
         /* 🌌 CENTRAL LIGHT ENGINE */
         .light-engine { position: absolute; inset: 0; z-index: 0; pointer-events: none; display: flex; align-items: center; justify-content: center; }

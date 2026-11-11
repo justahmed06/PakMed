@@ -202,7 +202,7 @@ export default function Appointments() {
       )}
 
       <style jsx global>{`
-        .leaflet-container { background: #0A0E1A; font-family: 'Product Sans', sans-serif; }
+        .leaflet-container { background: #0A0E1A; font-family: var(--font-product-sans), sans-serif; }
         .hospital-item:hover { background: rgba(61,90,254,0.1) !important; transform: translateX(5px); border-color: #3D5AFE !important; }
       `}</style>
     </div>
