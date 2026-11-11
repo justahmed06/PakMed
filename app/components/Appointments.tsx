@@ -137,10 +137,10 @@ export default function Appointments() {
   };
 
   return (
-    <div className="radar-layout flex flex-col lg:flex-row gap-4 w-full h-[calc(100vh-100px)] p-4" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'row', gap: '16px', width: '100%', padding: '16px', position: 'relative' }}>
+    <div className="radar-layout flex flex-col lg:flex-row gap-6 w-full h-[calc(100vh-100px)] p-6 bg-slate-950/40 backdrop-blur-xl rounded-3xl border border-white/10" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'row', gap: '24px', width: '100%', padding: '24px', position: 'relative' }}>
 
       {/* 📋 SIDEBAR */}
-      <div className="glass-card radar-sidebar w-full lg:w-[380px] h-full overflow-y-auto bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex flex-col gap-3 custom-scrollbar" style={{ width: '380px', height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto', flex: 'none' }}>
+      <div className="glass-card radar-sidebar w-full lg:w-[400px] h-full overflow-y-auto pr-2 space-y-4 custom-scrollbar" style={{ width: '400px', height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px', overflowY: 'auto', flex: 'none' }}>
         <h2 className="text-cyan-400 font-semibold tracking-wider" style={{ fontSize: '0.7rem', marginBottom: '20px' }}>
           {loading ? 'SCANNING SECTOR...' : 'LIVE RADAR RESULTS'}
         </h2>
@@ -156,16 +156,16 @@ export default function Appointments() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           {nearby.map((h, i) => (
-            <div key={i} className="hospital-item bg-slate-800/50 border border-white/10 rounded-xl"
+            <div key={i} className="hospital-item bg-slate-900/60 hover:bg-slate-800/80 backdrop-blur-md border border-white/10 hover:border-cyan-500/40 rounded-2xl p-4 transition-all duration-200 shadow-md flex items-center justify-between"
               onClick={() => setTargetPos(h.coords)} // 👈 THIS MAKES IT ZOOM
-              style={{ padding: '15px', cursor: 'pointer', transition: '0.2s' }}>
+              style={{ padding: '16px', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-              <div style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{h.name}</div>
+              <div className="text-slate-100 font-semibold text-sm tracking-wide" style={{ fontSize: '0.9rem' }}>{h.name}</div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
-                <span style={{ fontSize: '0.7rem', color: '#00E676' }}>{h.dist?.toFixed(1)} km</span>
+                <span className="text-emerald-400 text-xs font-mono" style={{ fontSize: '0.7rem' }}>{h.dist?.toFixed(1)} km</span>
                 <button onClick={(e) => { e.stopPropagation(); setBookingHospital(h); }}
-                  className="bg-slate-800/50 border border-white/10 rounded-xl text-slate-200"
-                  style={{ color: '#3D5AFE', padding: '5px 10px', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 'bold' }}>
+                  className="px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500 hover:to-blue-600 text-cyan-300 hover:text-white border border-cyan-500/30 text-xs font-medium rounded-xl transition-all shadow-sm"
+                  style={{ color: '#67E8F9', padding: '8px 16px', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 500 }}>
                   BOOK NOW
                 </button>
               </div>
@@ -200,7 +200,7 @@ export default function Appointments() {
         </MapContainer>
         <button
           onClick={handleLocate}
-          className="absolute bottom-6 right-6 z-[1000] bg-slate-900/80 backdrop-blur-md border border-white/20 text-cyan-400 font-semibold px-5 py-2.5 rounded-2xl shadow-lg radar-recalibrate"
+          className="absolute bottom-6 right-6 z-[1000] bg-slate-900/90 hover:bg-slate-800 backdrop-blur-xl border border-white/20 text-cyan-400 hover:text-cyan-300 font-semibold text-xs tracking-wider uppercase px-5 py-3 rounded-2xl shadow-xl shadow-cyan-950/50 flex items-center gap-2 transition-all radar-recalibrate"
         >
           <span>📍</span> RE-CALIBRATE GPS
         </button>
@@ -222,9 +222,7 @@ export default function Appointments() {
           .radar-sidebar { width: 100% !important; height: auto; max-height: 420px; }
           .radar-map-panel { width: 100%; min-height: 500px; height: 650px; flex: none; }
         }
-        .radar-recalibrate {
-          cursor: pointer;
-        }
+        .radar-recalibrate { cursor: pointer; }
         .hospital-item:hover { background: rgba(61,90,254,0.1) !important; transform: translateX(5px); border-color: #3D5AFE !important; }
       `}</style>
     </div>

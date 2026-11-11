@@ -37,6 +37,130 @@ body {
   color: rgb(226 232 240);
 }
 
+.text-slate-100 {
+  color: rgb(241 245 249);
+}
+
+.text-emerald-400 {
+  color: rgb(52 211 153);
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1rem;
+}
+
+.pr-2 {
+  padding-right: 0.5rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.bg-slate-900\/60 {
+  background-color: rgb(15 23 42 / 0.6);
+}
+
+.hover\:bg-slate-800:hover {
+  background-color: rgb(30 41 59);
+}
+
+.hover\:border-cyan-500\/40:hover {
+  border-color: rgb(6 182 212 / 0.4);
+}
+
+.hover\:text-cyan-300:hover {
+  color: rgb(103 232 249);
+}
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--gradient-from), var(--gradient-to));
+}
+
+.from-cyan-500\/20 {
+  --gradient-from: rgb(6 182 212 / 0.2);
+}
+
+.to-blue-500\/20 {
+  --gradient-to: rgb(59 130 246 / 0.2);
+}
+
+.hover\:from-cyan-500:hover {
+  --gradient-from: rgb(6 182 212);
+}
+
+.hover\:to-blue-600:hover {
+  --gradient-to: rgb(37 99 235);
+}
+
+.text-cyan-300 {
+  color: rgb(103 232 249);
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.shadow-cyan-950\/50 {
+  box-shadow: 0 20px 25px -5px rgb(8 47 73 / 0.5), 0 8px 10px -6px rgb(8 47 73 / 0.5);
+}
+
+.duration-200 {
+  transition-duration: 200ms;
+}
+
+.transition-all {
+  transition-property: all;
+}
+
+.space-y-4 {
+  row-gap: 1rem;
+}
+
+.lg\:w-\[400px\] {
+  width: 400px;
+}
+
+@media (max-width: 1023px) {
+  .lg\:w-\[400px\] {
+    width: 100%;
+  }
+}
+
 .bg-slate-800\/50 {
   background-color: rgb(30 41 59 / 0.5);
 }
@@ -59,6 +183,22 @@ body {
 
 .bg-slate-900\/60 {
   background-color: rgb(15 23 42 / 0.6);
+}
+
+.bg-slate-950\/40 {
+  background-color: rgb(2 6 23 / 0.4);
+}
+
+.bg-slate-900\/90 {
+  background-color: rgb(15 23 42 / 0.9);
+}
+
+.bg-slate-800\/80 {
+  background-color: rgb(30 41 59 / 0.8);
+}
+
+.hover\:bg-slate-800\/80:hover {
+  background-color: rgb(30 41 59 / 0.8);
 }
 
 .bg-white\/\[0\.03\] {
