@@ -1,9 +1,37 @@
 'use client';
 import React, { useState } from 'react';
 
-export default function VitalCard({ id, type, data, isFlipped, onFlip, onSave }) {
-  const [val1, setVal1] = useState(type === 'bmi' ? data.h : type === 'bp' ? data.sys : data.hba1c || data.val);
-  const [val2, setVal2] = useState(type === 'bmi' ? data.w : data.dia || 0);
+type VitalType = 'bmi' | 'bp' | 'sugar' | 'heart';
+
+interface VitalData {
+  readonly title: string;
+  readonly val?: string | number;
+  readonly status: string;
+  readonly color: string;
+  /** Height (cm) – BMI only */
+  readonly h?: number;
+  /** Weight (kg) – BMI only */
+  readonly w?: number;
+  /** Systolic – BP only */
+  readonly sys?: number;
+  /** Diastolic – BP only */
+  readonly dia?: number;
+  /** HbA1c – sugar only */
+  readonly hba1c?: number;
+}
+
+interface VitalCardProps {
+  id: string;
+  type: VitalType;
+  data: VitalData;
+  isFlipped: boolean;
+  onFlip: () => void;
+  onSave: (val1: number, val2: number) => void;
+}
+
+export default function VitalCard({ type, data, isFlipped, onFlip, onSave }: VitalCardProps) {
+  const [val1, setVal1] = useState(type === 'bmi' ? (data.h ?? 0) : type === 'bp' ? (data.sys ?? 0) : (data.hba1c ?? Number(data.val ?? 0)));
+  const [val2, setVal2] = useState(type === 'bmi' ? (data.w ?? 0) : (data.dia ?? 0));
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', zIndex: isFlipped ? 50 : 1 }}>

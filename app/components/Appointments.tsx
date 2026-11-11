@@ -6,13 +6,15 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
 // 🏥 SOVEREIGN ASSETS
-const sovereignIcon = L.icon({
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
+const sovereignIcon = typeof window !== 'undefined'
+  ? L.icon({
+      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+    })
+  : undefined;
 
 const ANCHOR_BAHADURABAD: [number, number] = [24.8825, 67.0694];
 
@@ -23,8 +25,30 @@ const SECTORS = [
   { name: "North Nazimabad", coords: [24.9372, 67.0422] },
 ];
 
+/** Shape returned by the Overpass API for a single OSM element. */
+interface OverpassElement {
+  readonly lat?: number;
+  readonly lon?: number;
+  readonly center?: { readonly lat: number; readonly lon: number };
+  readonly tags: {
+    readonly name?: string;
+    readonly amenity?: string;
+  };
+}
+
+interface OverpassResponse {
+  readonly elements: readonly OverpassElement[];
+}
+
+interface NearbyResult {
+  readonly name: string;
+  readonly coords: [number, number];
+  readonly type: "Hospital" | "Clinic";
+  readonly dist: number;
+}
+
 // 📡 THE LIVE SCANNER (Overpass API)
-async function fetchNearbyHospitals(lat: number, lng: number) {
+async function fetchNearbyHospitals(lat: number, lng: number): Promise<NearbyResult[]> {
   const query = `
     [out:json];
     (
@@ -35,17 +59,17 @@ async function fetchNearbyHospitals(lat: number, lng: number) {
   `;
   try {
     const response = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
-    const data = await response.json();
-    return data.elements.map((el: any) => ({
+    const data: OverpassResponse = await response.json();
+    return data.elements.map((el) => ({
       name: el.tags.name || "Medical Facility",
-      coords: [el.lat || el.center.lat, el.lon || el.center.lon],
-      type: el.tags.amenity === 'hospital' ? 'Hospital' : 'Clinic',
-      dist: getDistance(lat, lng, el.lat || el.center.lat, el.lon || el.center.lon)
-    })).sort((a: any, b: any) => a.dist - b.dist).slice(0, 8);
-  } catch (err) { return []; }
+      coords: [(el.lat ?? el.center?.lat ?? 0), (el.lon ?? el.center?.lon ?? 0)] as [number, number],
+      type: (el.tags.amenity === 'hospital' ? 'Hospital' : 'Clinic') as "Hospital" | "Clinic",
+      dist: getDistance(lat, lng, el.lat ?? el.center?.lat ?? 0, el.lon ?? el.center?.lon ?? 0)
+    })).sort((a, b) => a.dist - b.dist).slice(0, 8);
+  } catch { return []; }
 }
 
-function getDistance(lat1, lon1, lat2, lon2) {
+function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371;
   const dLat = (lat2 - lat1) * (Math.PI / 180);
   const dLon = (lon2 - lon1) * (Math.PI / 180);
@@ -55,7 +79,14 @@ function getDistance(lat1, lon1, lat2, lon2) {
 }
 
 // 🚁 ZOOM CONTROLLER (Listens for Sidebar Clicks)
-function MapEffect({ targetCoords, userCoords, setNearby, setLoading }) {
+interface MapEffectProps {
+  targetCoords: [number, number] | null;
+  userCoords: [number, number] | null;
+  setNearby: React.Dispatch<React.SetStateAction<NearbyResult[]>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function MapEffect({ targetCoords, userCoords, setNearby, setLoading }: MapEffectProps) {
   const map = useMap();
 
   // Fly to specific hospital when clicked
@@ -83,19 +114,21 @@ function MapEffect({ targetCoords, userCoords, setNearby, setLoading }) {
 export default function Appointments() {
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [targetPos, setTargetPos] = useState<[number, number] | null>(null); // For sidebar clicks
-  const [nearby, setNearby] = useState<any[]>([]);
+  const [nearby, setNearby] = useState<NearbyResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const [bookingHospital, setBookingHospital] = useState<any>(null);
+  const [bookingHospital, setBookingHospital] = useState<NearbyResult | null>(null);
 
   useEffect(() => { fetchNearbyHospitals(ANCHOR_BAHADURABAD[0], ANCHOR_BAHADURABAD[1]).then(setNearby); }, []);
 
   const handleLocate = () => {
-    if (navigator.geolocation) {
+    if (typeof window !== 'undefined' && typeof navigator !== 'undefined' && navigator.geolocation) {
       setLoading(true);
       navigator.geolocation.getCurrentPosition(
         (pos) => setUserPos([pos.coords.latitude, pos.coords.longitude]),
-        (err) => {
-          alert("Sensors blocked. Switching to Johar Simulation.");
+        () => {
+          if (typeof window !== 'undefined') {
+            alert("Sensors blocked. Switching to Johar Simulation.");
+          }
           setUserPos([24.9176, 67.1197]); // Johar Fallback
         }
       );

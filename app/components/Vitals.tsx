@@ -1,7 +1,14 @@
 'use client';
 import React, { useState } from 'react';
 
-function VitalCard({ label, val, status, color }: any) {
+interface VitalCardProps {
+  label: string;
+  val: string;
+  status: string;
+  color: string;
+}
+
+function VitalCard({ label, val, status, color }: VitalCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 

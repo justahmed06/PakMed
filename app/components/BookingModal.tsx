@@ -1,7 +1,19 @@
 'use client';
 import React, { useState } from 'react';
 
-export default function BookingModal({ hospital, onClose }) {
+interface BookingHospital {
+  readonly name: string;
+  readonly coords: [number, number];
+  readonly type: string;
+  readonly dist: number;
+}
+
+interface BookingModalProps {
+  hospital: BookingHospital;
+  onClose: () => void;
+}
+
+export default function BookingModal({ hospital, onClose }: BookingModalProps) {
   const [step, setStep] = useState(1);
 
   return (

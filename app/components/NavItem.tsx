@@ -1,4 +1,14 @@
-export default function NavItem({ icon, label, expanded, active, onClick }) {
+import React from 'react';
+
+interface NavItemProps {
+  icon: React.ReactNode;
+  label: string;
+  expanded: boolean;
+  active: boolean;
+  onClick: () => void;
+}
+
+export default function NavItem({ icon, label, expanded, active, onClick }: NavItemProps) {
   return (
     <div onClick={onClick} style={{ 
       display: 'flex', alignItems: 'center', gap: '20px', padding: '16px', borderRadius: '18px', cursor: 'pointer',

@@ -32,7 +32,11 @@ export default function Settings() {
         </div>
       </div>
 
-      <button className="system-purge" onClick={() => alert("VAULT PURGED.")}>SYSTEM PURGE</button>
+      <button className="system-purge" onClick={() => {
+        if (typeof window !== 'undefined') {
+          alert("VAULT PURGED.");
+        }
+      }}>SYSTEM PURGE</button>
 
       <style jsx>{`
         .vault-settings { flex: 1; maxWidth: 600px; margin: auto; display: flex; flex-direction: column; gap: 40px; padding: 20px; }

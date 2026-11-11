@@ -5,17 +5,22 @@ export default function Diagnosis() {
   const [query, setQuery] = useState('');
   const [isListening, setIsListening] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<{ start: () => void; stop: () => void } | null>(null);
 
   const letters = "PAKMED".split("");
 
   useEffect(() => {
     if (typeof window !== 'undefined' && ('webkitSpeechRecognition' in window)) {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition;
+      const SpeechRecognition = (window as unknown as Record<string, unknown>).webkitSpeechRecognition as { new (): {
+        continuous: boolean;
+        onresult: (e: { results: ArrayLike<{ readonly 0: { transcript: string } }> }) => void;
+        start: () => void;
+        stop: () => void;
+      }};
       const recognition = new SpeechRecognition();
       recognition.continuous = true;
-      recognition.onresult = (e: any) => {
-        const transcript = Array.from(e.results).map((r: any) => r[0].transcript).join('');
+      recognition.onresult = (e) => {
+        const transcript = Array.from(e.results).map((r) => r[0].transcript).join('');
         setQuery(transcript);
       };
       recognitionRef.current = recognition;
@@ -53,7 +58,14 @@ export default function Diagnosis() {
 
         <div className="action-row">
           {/* 🌊 DYNAMIC VOICE FLOW ICON */}
-          <button className={`tool-btn ${isListening ? 'active-wave' : ''}`} onClick={() => { isListening ? recognitionRef.current?.stop() : recognitionRef.current?.start(); setIsListening(!isListening); }}>
+          <button className={`tool-btn ${isListening ? 'active-wave' : ''}`} onClick={() => {
+            if (isListening) {
+              recognitionRef.current?.stop();
+            } else {
+              recognitionRef.current?.start();
+            }
+            setIsListening(!isListening);
+          }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
               <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>

@@ -19,11 +19,15 @@ export default function Pharmacy() {
 
   const handleDispatch = () => {
     if (!query) {
-      alert("Please enter a medicine name.");
+      if (typeof window !== 'undefined') {
+        alert("Please enter a medicine name.");
+      }
       return;
     }
     const message = `Inquiry:\n\n💊 Medicine: ${query}\n🔢 Quantity: ${qty}\n\n❓ Requesting Price & Availability.`;
-    window.open(`https://wa.me/${selectedVendor.number}?text=${encodeURIComponent(message)}`, '_blank');
+    if (typeof window !== 'undefined') {
+      window.open(`https://wa.me/${selectedVendor.number}?text=${encodeURIComponent(message)}`, '_blank');
+    }
   };
 
   return (
