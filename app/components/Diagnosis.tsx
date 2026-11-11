@@ -42,7 +42,7 @@ export default function Diagnosis() {
 
       {/* 💬 PREMIUM GLASS PILL CONSOLE */}
       <div className="search-orb absolute w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" aria-hidden="true"></div>
-      <div className={`glass-console bg-slate-900/40 backdrop-blur-xl border border-white/10 border-t-white/20 shadow-[0_12px_32px_rgba(0,0,0,0.5),inset_0_1px_0px_rgba(255,255,255,0.15)] rounded-full ${isListening ? 'listening-active' : ''}`}>
+      <div className={`glass-console bg-slate-900/40 backdrop-blur-xl border border-white/10 border-t-white/20 shadow-[0_12px_32px_rgba(0,0,0,0.5),inset_0_1px_0px_rgba(255,255,255,0.15)] rounded-2xl ${isListening ? 'listening-active' : ''}`}>
         
         {/* ➕ THE PLUS ICON */}
         <button className="tool-btn" onClick={() => fileInputRef.current?.click()}>
