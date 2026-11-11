@@ -40,12 +40,12 @@ export default function Pharmacy() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%' }}>
 
       {/* HEADER (Animated Gradient) */}
-      <header className="glass-card bg-slate-900/50 backdrop-blur-md border border-white/10" style={{ padding: '20px', textAlign: 'center', flexShrink: 0 }}>
+      <header className="glass-card bg-slate-900/40 backdrop-blur-2xl border border-white/10 border-t-white/25 border-b-white/5 shadow-[0_16px_40px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-3xl" style={{ padding: '20px', textAlign: 'center', flexShrink: 0 }}>
         <h1 className="sovereign-text">PHARMACY DISPATCH</h1>
       </header>
 
       {/* ⌨️ INPUT CONSOLE */}
-      <div className="glass-card bg-slate-900/50 backdrop-blur-md border border-white/10" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, minHeight: 0 }}>
+      <div className="glass-card bg-slate-900/40 backdrop-blur-2xl border border-white/10 border-t-white/25 border-b-white/5 shadow-[0_16px_40px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-3xl" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, minHeight: 0 }}>
 
         {/* Row 1: Medicine Input */}
         <div>

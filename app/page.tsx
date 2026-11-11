@@ -28,6 +28,9 @@ export default function PakMedOS() {
       
       {/* 🌌 CENTRAL LIGHT ENGINE (The glowing core behind the glass) */}
       <div className="light-engine">
+        <div className="absolute -top-10 left-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none animate-pulse ambient-glow-left" aria-hidden="true"></div>
+        <div className="absolute top-10 right-1/3 w-96 h-96 bg-sky-600/15 rounded-full blur-[120px] pointer-events-none ambient-glow-right" aria-hidden="true"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-48 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 blur-3xl pointer-events-none rounded-full search-pill-ambient" aria-hidden="true"></div>
         <div className="core-orb"></div>
       </div>
 
@@ -54,7 +57,7 @@ export default function PakMedOS() {
         </div>
       </aside>
 
-      <main className="viewport">
+      <main className="viewport liquid-surface after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-b after:from-white/10 after:to-transparent after:pointer-events-none bg-white/[0.03] dark:bg-slate-900/40 backdrop-blur-2xl border border-white/20 border-t-white/40 border-b-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-1px_1px_rgba(0,0,0,0.4)] liquid-inner-glow">
         {activeTab === 'diagnosis' && <Diagnosis />}
         {activeTab === 'vitals' && <Vitals />}
         {activeTab === 'pharmacy' && <Pharmacy />}
@@ -74,6 +77,39 @@ export default function PakMedOS() {
           filter: blur(180px); /* Massive blur for soft bokeh */
           opacity: 0.6;
           animation: core-pulse 10s ease-in-out infinite alternate;
+        }
+        .ambient-glow-left,
+        .ambient-glow-right {
+          position: absolute;
+          border-radius: 9999px;
+          pointer-events: none;
+        }
+        .ambient-glow-left {
+          top: -2.5rem;
+          left: 33.333333%;
+          width: 20rem;
+          height: 20rem;
+          background: rgb(6 182 212 / 0.2);
+          filter: blur(100px);
+        }
+        .ambient-glow-right {
+          top: 2.5rem;
+          right: 33.333333%;
+          width: 24rem;
+          height: 24rem;
+          background: rgb(2 132 199 / 0.15);
+          filter: blur(120px);
+        }
+        .search-pill-ambient {
+          top: 50%;
+          left: 50%;
+          width: 24rem;
+          height: 12rem;
+          transform: translate(-50%, -50%);
+          border-radius: 9999px;
+          background: linear-gradient(to right, rgb(6 182 212 / 0.2), rgb(37 99 235 / 0.2));
+          filter: blur(64px);
+          pointer-events: none;
         }
         @keyframes core-pulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.1); opacity: 0.8; } }
 

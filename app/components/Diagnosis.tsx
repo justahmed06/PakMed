@@ -41,7 +41,8 @@ export default function Diagnosis() {
       </div>
 
       {/* 💬 PREMIUM GLASS PILL CONSOLE */}
-      <div className={`glass-console bg-slate-900/50 backdrop-blur-md border border-white/10 ${isListening ? 'listening-active' : ''}`}>
+      <div className="search-orb absolute w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" aria-hidden="true"></div>
+      <div className={`glass-console bg-slate-900/40 backdrop-blur-xl border border-white/10 border-t-white/20 shadow-[0_12px_32px_rgba(0,0,0,0.5),inset_0_1px_0px_rgba(255,255,255,0.15)] rounded-full ${isListening ? 'listening-active' : ''}`}>
         
         {/* ➕ THE PLUS ICON */}
         <button className="tool-btn" onClick={() => fileInputRef.current?.click()}>
@@ -80,7 +81,8 @@ export default function Diagnosis() {
       </div>
 
       <style jsx>{`
-        .diag-viewport { display: flex; flex-direction: column; align-items: center; gap: 50px; }
+        .diag-viewport { display: flex; flex-direction: column; align-items: center; gap: 50px; position: relative; }
+        .search-orb { top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgb(6 182 212 / 0.2); }
         .branding-deck { width: max-content; }
         
         /* ❄️ SEQUENTIAL PHOTON PULSE */
@@ -100,11 +102,8 @@ export default function Diagnosis() {
 
         /* 💬 HEAVY GLASSMORPHISM */
         .glass-console {
-          width: 780px; padding: 16px 28px; display: flex; align-items: center; gap: 15px;
-          backdrop-filter: blur(50px) saturate(180%);
-          border-radius: 40px;
+          width: 780px; padding: 16px 28px; display: flex; align-items: center; gap: 15px; position: relative;
           transition: 0.4s cubic-bezier(0.2, 0, 0, 1);
-          box-shadow: 0 15px 45px rgba(0,0,0,0.4);
         }
         .glass-console:focus-within { border-color: rgba(0, 229, 255, 0.5); box-shadow: 0 0 40px rgba(0, 229, 255, 0.2); }
         .listening-active { border-color: #00E5FF; animation: console-breathe 2s infinite ease-in-out; }
