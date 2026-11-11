@@ -17,6 +17,7 @@ const sovereignIcon = typeof window !== 'undefined'
   : undefined;
 
 const ANCHOR_BAHADURABAD: [number, number] = [24.8825, 67.0694];
+const DEFAULT_MAP_CENTER: [number, number] = [24.9180, 67.1325];
 
 const SECTORS = [
   { name: "Bahadurabad (Central)", coords: [24.8825, 67.0694] },
@@ -136,7 +137,7 @@ export default function Appointments() {
   };
 
   return (
-    <div className="radar-layout flex flex-col lg:flex-row gap-4 w-full h-[calc(100vh-120px)] p-4" style={{ height: 'calc(100vh - 120px)', display: 'flex', flexDirection: 'row', gap: '16px', width: '100%', padding: '16px', position: 'relative' }}>
+    <div className="radar-layout flex flex-col lg:flex-row gap-4 w-full h-[calc(100vh-100px)] p-4" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'row', gap: '16px', width: '100%', padding: '16px', position: 'relative' }}>
 
       {/* 📋 SIDEBAR */}
       <div className="glass-card radar-sidebar w-full lg:w-[380px] h-full overflow-y-auto bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex flex-col gap-3 custom-scrollbar" style={{ width: '380px', height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto', flex: 'none' }}>
@@ -175,11 +176,13 @@ export default function Appointments() {
       </div>
 
       {/* 🗺️ MAP CANVAS */}
-      <div className="glass-card radar-map-panel flex-1 h-full min-h-[550px] bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden relative" style={{ flex: 1, width: 'auto', height: '100%', minHeight: '550px' }}>
-        <MapContainer className="w-full h-full min-h-full z-0" center={ANCHOR_BAHADURABAD} zoom={13} style={{ width: '100%', height: '100%' }} zoomControl={false}>
+      <div className="glass-card radar-map-panel flex-1 h-full min-h-[500px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative bg-slate-900/40 backdrop-blur-xl" style={{ flex: 1, width: 'auto', height: '100%', minHeight: '500px' }}>
+        <MapContainer className="w-full h-full" center={DEFAULT_MAP_CENTER} zoom={15} style={{ width: '100%', height: '100%' }} zoomControl={false}>
           <TileLayer
-            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            subdomains={['a', 'b', 'c']}
+            maxZoom={19}
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {nearby.map((h, i) => (
             <Marker key={i} position={h.coords as [number, number]} icon={sovereignIcon}>
@@ -212,12 +215,12 @@ export default function Appointments() {
         .leaflet-container { background: #0A0E1A; font-family: var(--font-product-sans), sans-serif; }
         .radar-layout { box-sizing: border-box; }
         .radar-sidebar { box-sizing: border-box; }
-        .radar-map-panel { box-sizing: border-box; min-height: 550px; }
+        .radar-map-panel { box-sizing: border-box; min-height: 500px; }
         .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(148, 163, 184, 0.45) transparent; }
         @media (max-width: 1023px) {
           .radar-layout { height: auto; flex-direction: column !important; overflow-y: auto; }
           .radar-sidebar { width: 100% !important; height: auto; max-height: 420px; }
-          .radar-map-panel { width: 100%; min-height: 550px; height: 650px; flex: none; }
+          .radar-map-panel { width: 100%; min-height: 500px; height: 650px; flex: none; }
         }
         .radar-recalibrate {
           cursor: pointer;

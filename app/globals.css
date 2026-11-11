@@ -223,6 +223,10 @@ body {
   height: calc(100vh - 120px);
 }
 
+.h-\[calc\(100vh-100px\)\] {
+  height: calc(100vh - 100px);
+}
+
 .lg\:flex-row {
   flex-direction: row;
 }
