@@ -461,6 +461,12 @@ export default function Vitals() {
           width: 100%;
           max-width: 920px;
           margin: auto;
+          padding: 24px;
+          background: rgba(15, 23, 42, 0.4);
+          backdrop-filter: blur(40px) saturate(130%);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 24px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
         .ledger-bar {
@@ -468,7 +474,7 @@ export default function Vitals() {
           justify-content: space-between;
           align-items: center;
           padding: 8px 18px;
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(15, 23, 42, 0.5);
           border: 1px solid rgba(255, 255, 255, 0.06);
           border-radius: 12px;
           backdrop-filter: blur(20px);
@@ -553,10 +559,10 @@ export default function Vitals() {
           padding: 24px;
           display: flex;
           flex-direction: column;
-          background: rgba(10, 15, 30, 0.55);
-          backdrop-filter: blur(50px);
+          background: rgba(15, 23, 42, 0.5);
+          backdrop-filter: blur(24px) saturate(135%);
           border: 1px solid rgba(255, 255, 255, 0.08);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.14);
         }
 
         .card-front:hover {
@@ -628,7 +634,8 @@ export default function Vitals() {
 
         /* BACK FACE */
         .card-back {
-          background: rgba(5, 8, 18, 0.96);
+          background: rgba(15, 23, 42, 0.72);
+          backdrop-filter: blur(30px) saturate(140%);
           transform: rotateY(180deg);
           border: 1px solid rgba(61, 90, 254, 0.4);
         }
@@ -708,7 +715,7 @@ export default function Vitals() {
 
         .vault-field {
           flex: 1;
-          background: rgba(0, 0, 0, 0.5);
+          background: rgba(30, 41, 59, 0.5);
           border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 8px;
           padding: 8px 12px;
@@ -767,7 +774,7 @@ export default function Vitals() {
 
         .confirm-btn {
           width: 100%;
-          background: #3d5afe;
+          background: linear-gradient(to right, #38bdf8, #2563eb);
           color: white;
           border: none;
           padding: 9px;
@@ -780,7 +787,7 @@ export default function Vitals() {
         }
 
         .confirm-btn:hover {
-          background: #2945ff;
+          background: linear-gradient(to right, #7dd3fc, #3b82f6);
           box-shadow: 0 0 20px rgba(61, 90, 254, 0.4);
         }
       `}</style>

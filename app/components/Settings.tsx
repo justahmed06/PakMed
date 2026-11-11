@@ -9,21 +9,21 @@ export default function Settings() {
   ]);
 
   return (
-    <div className="vault-settings">
-      <header className="v-header">CORE CONFIGURATION</header>
+    <div className="vault-settings glass-panel">
+      <header className="v-header text-cyan-400 font-semibold tracking-wider">CORE CONFIGURATION</header>
 
-      <div className="v-section">
+      <div className="v-section glass-card">
         <label>Active Theme</label>
-        <button className="theme-toggle" onClick={() => setTheme(theme === 'Deep Space' ? 'Clinical Ice' : 'Deep Space')}>
+        <button className="theme-toggle btn-gradient-pill" onClick={() => setTheme(theme === 'Deep Space' ? 'Clinical Ice' : 'Deep Space')}>
           {theme}
         </button>
       </div>
 
-      <div className="v-section">
+      <div className="v-section glass-card">
         <label>Neural History Ledger</label>
         <div className="history-stack">
           {history.map((h, i) => (
-            <div key={i} className="h-item">
+            <div key={i} className="h-item glass-card">
               <span className="h-date">{h.date}</span>
               <span className="h-event">{h.event}</span>
               <span className="h-status">{h.status}</span>
@@ -39,13 +39,13 @@ export default function Settings() {
       }}>SYSTEM PURGE</button>
 
       <style jsx>{`
-        .vault-settings { flex: 1; maxWidth: 600px; margin: auto; display: flex; flex-direction: column; gap: 40px; padding: 20px; }
-        .v-header { font-size: 0.8rem; letter-spacing: 6px; color: #2962FF; font-weight: 900; border-bottom: 1px solid rgba(41, 98, 255, 0.2); padding-bottom: 15px; }
-        .v-section { display: flex; flex-direction: column; gap: 15px; }
+        .vault-settings { flex: 1; max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 24px; padding: 24px; }
+        .v-header { font-size: 0.8rem; letter-spacing: 4px; border-bottom: 1px solid rgba(34, 211, 238, 0.2); padding: 0 0 15px; }
+        .v-section { display: flex; flex-direction: column; gap: 15px; padding: 20px; }
         label { font-size: 0.6rem; letter-spacing: 3px; color: #94A3B8; font-weight: 800; text-transform: uppercase; }
-        .theme-toggle { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; color: #00E5FF; font-weight: 900; cursor: pointer; }
+        .theme-toggle { justify-content: center; }
         .history-stack { display: flex; flex-direction: column; gap: 10px; }
-        .h-item { padding: 15px; background: rgba(255,255,255,0.02); border-radius: 10px; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .h-item { padding: 15px; display: flex; justify-content: space-between; font-size: 0.8rem; }
         .h-date { color: #448AFF; font-weight: 900; }
         .system-purge { background: #FF1744; border: none; padding: 18px; border-radius: 14px; color: white; font-weight: 900; cursor: pointer; box-shadow: 0 0 20px rgba(255, 23, 68, 0.3); }
       `}</style>

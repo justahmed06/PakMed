@@ -19,7 +19,7 @@ export default function BookingModal({ hospital, onClose }: BookingModalProps) {
   return (
     <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)', zIndex: 999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       
-      <div className="glass-card" style={{ width: '400px', padding: '40px', border: '1px solid #3D5AFE', borderRadius: '30px', background: 'rgba(10, 14, 26, 0.95)' }}>
+      <div className="glass-panel" style={{ width: '400px', padding: '40px' }}>
         
         {step === 1 ? (
           <>
