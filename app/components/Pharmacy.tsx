@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 
+import { generateWhatsAppInquiryUrl, searchMedicines } from '@/lib/pharmacy';
+
 // 📞 SOVEREIGN VENDOR DIRECTORY
 const VENDORS = [
   { name: "DVAGO", number: "9221111138246", color: "#EF5350" },
@@ -16,6 +18,7 @@ export default function Pharmacy() {
   const [query, setQuery] = useState('');
   const [qty, setQty] = useState(1);
   const [selectedVendor, setSelectedVendor] = useState(VENDORS[0]);
+  const matchingMedicines = searchMedicines(query);
 
   const handleDispatch = () => {
     if (!query) {
@@ -24,9 +27,12 @@ export default function Pharmacy() {
       }
       return;
     }
-    const message = `Inquiry:\n\n💊 Medicine: ${query}\n🔢 Quantity: ${qty}\n\n❓ Requesting Price & Availability.`;
     if (typeof window !== 'undefined') {
-      window.open(`https://wa.me/${selectedVendor.number}?text=${encodeURIComponent(message)}`, '_blank');
+      const inquiryUrl = generateWhatsAppInquiryUrl(
+        selectedVendor.number,
+        `${query} (Quantity: ${qty})`,
+      );
+      window.open(inquiryUrl, '_blank');
     }
   };
 
@@ -54,6 +60,36 @@ export default function Pharmacy() {
               fontFamily: '"Product Sans", sans-serif'
             }}
           />
+          {matchingMedicines.length > 0 && (
+            <div style={{ marginTop: '8px', display: 'grid', gap: '6px' }}>
+              {matchingMedicines.map((medicine) => (
+                <button
+                  key={medicine.id}
+                  type="button"
+                  onClick={() => setQuery(medicine.brandName)}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: '12px',
+                    padding: '10px 12px',
+                    border: '1px solid rgba(61,90,254,0.2)',
+                    borderRadius: '8px',
+                    background: 'rgba(61,90,254,0.08)',
+                    color: 'white',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <span>
+                    <strong>{medicine.brandName}</strong> · {medicine.genericName}
+                  </span>
+                  <span style={{ color: '#94A3B8', whiteSpace: 'nowrap' }}>
+                    PKR {medicine.approximatePricePKR}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Row 2: Controls */}
