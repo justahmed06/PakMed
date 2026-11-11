@@ -139,8 +139,8 @@ export default function Appointments() {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '25px', position: 'relative', overflowY: 'auto' }}>
 
       {/* 📋 SIDEBAR */}
-      <div className="glass-card" style={{ flex: 1, padding: '30px', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
-        <h2 style={{ fontSize: '0.7rem', color: '#3D5AFE', letterSpacing: '4px', marginBottom: '20px' }}>
+      <div className="glass-card bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl p-6" style={{ flex: 1, padding: '30px', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+        <h2 className="text-cyan-400 font-semibold tracking-wider" style={{ fontSize: '0.7rem', marginBottom: '20px' }}>
           {loading ? 'SCANNING SECTOR...' : 'LIVE RADAR RESULTS'}
         </h2>
 
@@ -148,22 +148,23 @@ export default function Appointments() {
         <select onChange={(e) => {
           const sec = SECTORS.find(s => s.name === e.target.value);
           if (sec) setUserPos(sec.coords as [number, number]);
-        }} style={{ padding: '10px', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid #333', borderRadius: '8px', marginBottom: '15px' }}>
+        }} className="bg-slate-800/50 border border-white/10 rounded-xl text-slate-200" style={{ padding: '10px', marginBottom: '15px' }}>
           <option value="">Jump to Sector...</option>
           {SECTORS.map(s => <option key={s.name} value={s.name} style={{ color: 'black' }}>{s.name}</option>)}
         </select>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           {nearby.map((h, i) => (
-            <div key={i} className="hospital-item"
+            <div key={i} className="hospital-item bg-slate-800/50 border border-white/10 rounded-xl"
               onClick={() => setTargetPos(h.coords)} // 👈 THIS MAKES IT ZOOM
-              style={{ padding: '15px', background: 'rgba(255,255,255,0.03)', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', transition: '0.2s' }}>
+              style={{ padding: '15px', cursor: 'pointer', transition: '0.2s' }}>
 
               <div style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{h.name}</div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
                 <span style={{ fontSize: '0.7rem', color: '#00E676' }}>{h.dist?.toFixed(1)} km</span>
                 <button onClick={(e) => { e.stopPropagation(); setBookingHospital(h); }}
-                  style={{ background: 'rgba(61,90,254,0.2)', color: '#3D5AFE', border: '1px solid #3D5AFE', padding: '5px 10px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 'bold' }}>
+                  className="bg-slate-800/50 border border-white/10 rounded-xl text-slate-200"
+                  style={{ color: '#3D5AFE', padding: '5px 10px', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 'bold' }}>
                   BOOK NOW
                 </button>
               </div>
@@ -174,7 +175,7 @@ export default function Appointments() {
       </div>
 
       {/* 🗺️ MAP CANVAS */}
-      <div className="glass-card map-container w-full h-[600px] rounded-3xl overflow-hidden border border-white/10 relative" style={{ width: '100%', height: '600px', flex: 'none' }}>
+      <div className="glass-card bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl p-6 map-container w-full h-[600px] overflow-hidden relative" style={{ width: '100%', height: '600px', flex: 'none', padding: 0 }}>
         <MapContainer className="w-full h-full" center={ANCHOR_BAHADURABAD} zoom={13} style={{ height: '100%', width: '100%' }} zoomControl={false}>
           <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
           {nearby.map((h, i) => (
