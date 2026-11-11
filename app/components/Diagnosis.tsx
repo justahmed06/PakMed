@@ -37,7 +37,7 @@ export default function Diagnosis() {
             <span key={i} className="letter" style={{ animationDelay: `${i * 0.15}s` }}>{char}</span>
           ))}
         </h1>
-        <p className="who-text font-sans tracking-[0.2em] font-bold">WHO ICD-11 TAXONOMY COMPLIANT</p>
+        <p className="who-text w-full text-center flex items-center justify-center pl-[0.38em] font-sans tracking-[0.38em] text-[11px] sm:text-[12px] font-semibold text-cyan-300/70">WHO ICD-11 TAXONOMY COMPLIANT</p>
       </div>
 
       {/* 💬 PREMIUM GLASS PILL CONSOLE */}
@@ -81,6 +81,7 @@ export default function Diagnosis() {
 
       <style jsx>{`
         .diag-viewport { display: flex; flex-direction: column; align-items: center; gap: 50px; }
+        .branding-deck { width: max-content; }
         
         /* ❄️ SEQUENTIAL PHOTON PULSE */
         .photon-logo { display: flex; gap: 4px; justify-content: center; margin: 0; }
@@ -92,7 +93,10 @@ export default function Diagnosis() {
           will-change: color, text-shadow; 
         }
 
-        .who-text { color: #00E5FF; font-size: 0.65rem; margin-top: 15px; opacity: 0.8; text-shadow: 0 0 15px rgba(0, 229, 255, 0.4); }
+        .who-text { width: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: rgba(103, 232, 249, 0.7); font-size: 11px; font-weight: 600; letter-spacing: 0.38em; line-height: 1.4; margin-top: 15px; padding-left: 0.38em; text-align: center; text-shadow: 0 0 15px rgba(0, 229, 255, 0.4); }
+        @media (min-width: 640px) {
+          .who-text { font-size: 12px; }
+        }
 
         /* 💬 HEAVY GLASSMORPHISM */
         .glass-console {
