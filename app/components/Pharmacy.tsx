@@ -40,12 +40,12 @@ export default function Pharmacy() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%' }}>
 
       {/* HEADER (Animated Gradient) */}
-      <header className="glass-card" style={{ padding: '20px', textAlign: 'center', flexShrink: 0 }}>
+      <header className="glass-card bg-slate-900/50 backdrop-blur-md border border-white/10" style={{ padding: '20px', textAlign: 'center', flexShrink: 0 }}>
         <h1 className="sovereign-text">PHARMACY DISPATCH</h1>
       </header>
 
       {/* ⌨️ INPUT CONSOLE */}
-      <div className="glass-card" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, minHeight: 0 }}>
+      <div className="glass-card bg-slate-900/50 backdrop-blur-md border border-white/10" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, minHeight: 0 }}>
 
         {/* Row 1: Medicine Input */}
         <div>
@@ -54,8 +54,9 @@ export default function Pharmacy() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Type prescription here..."
+            className="bg-slate-900/50 backdrop-blur-md border border-white/10"
             style={{
-              width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(61,90,254,0.3)',
+              width: '100%',
               color: 'white', fontSize: '1.2rem', padding: '15px', borderRadius: '12px', outline: 'none',
               fontFamily: 'var(--font-product-sans), sans-serif'
             }}

@@ -41,7 +41,7 @@ export default function Diagnosis() {
       </div>
 
       {/* 💬 PREMIUM GLASS PILL CONSOLE */}
-      <div className={`glass-console ${isListening ? 'listening-active' : ''}`}>
+      <div className={`glass-console bg-slate-900/50 backdrop-blur-md border border-white/10 ${isListening ? 'listening-active' : ''}`}>
         
         {/* ➕ THE PLUS ICON */}
         <button className="tool-btn" onClick={() => fileInputRef.current?.click()}>
@@ -101,9 +101,7 @@ export default function Diagnosis() {
         /* 💬 HEAVY GLASSMORPHISM */
         .glass-console {
           width: 780px; padding: 16px 28px; display: flex; align-items: center; gap: 15px;
-          background: rgba(15, 20, 35, 0.5); 
           backdrop-filter: blur(50px) saturate(180%);
-          border: 1px solid rgba(255, 255, 255, 0.12); 
           border-radius: 40px;
           transition: 0.4s cubic-bezier(0.2, 0, 0, 1);
           box-shadow: 0 15px 45px rgba(0,0,0,0.4);
