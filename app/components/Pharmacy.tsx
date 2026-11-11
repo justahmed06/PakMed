@@ -40,16 +40,19 @@ export default function Pharmacy() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%' }}>
 
       {/* HEADER (Animated Gradient) */}
-      <header className="glass-card bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl" style={{ padding: '20px', textAlign: 'center', flexShrink: 0 }}>
+      <header className="glass-panel" style={{ padding: '20px', textAlign: 'center', flexShrink: 0 }}>
         <h1 className="sovereign-text">PHARMACY DISPATCH</h1>
       </header>
 
       {/* ⌨️ INPUT CONSOLE */}
-      <div className="glass-card bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, minHeight: 0 }}>
+      <div className="glass-panel" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1, minHeight: 0 }}>
 
         {/* Row 1: Medicine Input */}
         <div>
-          <label style={{ display: 'block', color: '#3D5AFE', fontSize: '0.65rem', letterSpacing: '2px', marginBottom: '8px' }}>TARGET MEDICINE</label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#3D5AFE', fontSize: '0.65rem', letterSpacing: '2px', marginBottom: '8px' }}>
+            <span className="icon-badge" aria-hidden="true">+</span>
+            TARGET MEDICINE
+          </label>
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -108,7 +111,10 @@ export default function Pharmacy() {
 
           {/* Col B: Vendor Grid (Dense 3-Column) */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <label style={{ display: 'block', color: '#94A3B8', fontSize: '0.65rem', letterSpacing: '2px', marginBottom: '8px' }}>TARGET VENDOR</label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#94A3B8', fontSize: '0.65rem', letterSpacing: '2px', marginBottom: '8px' }}>
+              <span className="icon-badge" aria-hidden="true">⌁</span>
+              TARGET VENDOR
+            </label>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', overflowY: 'auto', paddingRight: '5px' }}>
               {VENDORS.map((v) => (
                 <button
@@ -132,7 +138,7 @@ export default function Pharmacy() {
         </div>
 
         {/* 🚀 LAUNCH BUTTON (Compact) */}
-        <button onClick={handleDispatch} className="dispatch-btn bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/20">
+        <button onClick={handleDispatch} className="btn-gradient-pill dispatch-btn">
           <span>QUERY {selectedVendor.name} ➔</span>
         </button>
 

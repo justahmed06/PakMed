@@ -137,11 +137,12 @@ export default function Appointments() {
   };
 
   return (
-    <div className="radar-layout flex flex-col lg:flex-row gap-6 w-full h-[calc(100vh-100px)] p-6 bg-slate-950/40 backdrop-blur-xl rounded-3xl border border-white/10" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'row', gap: '24px', width: '100%', padding: '24px', position: 'relative' }}>
+    <div className="glass-panel radar-layout flex flex-col lg:flex-row gap-6 w-full h-[calc(100vh-100px)] p-6" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'row', gap: '24px', width: '100%', padding: '24px', position: 'relative' }}>
 
       {/* 📋 SIDEBAR */}
-      <div className="glass-card radar-sidebar w-full lg:w-[400px] h-full overflow-y-auto pr-2 space-y-4 custom-scrollbar" style={{ width: '400px', height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px', overflowY: 'auto', flex: 'none' }}>
-        <h2 className="text-cyan-400 font-semibold tracking-wider" style={{ fontSize: '0.7rem', marginBottom: '20px' }}>
+      <div className="glass-panel radar-sidebar w-full lg:w-[400px] h-full overflow-y-auto pr-2 space-y-4 custom-scrollbar" style={{ width: '400px', height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px', overflowY: 'auto', flex: 'none' }}>
+        <h2 className="text-cyan-400 font-semibold tracking-wider" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.7rem', marginBottom: '20px' }}>
+          <span className="icon-badge" aria-hidden="true">⌖</span>
           {loading ? 'SCANNING SECTOR...' : 'LIVE RADAR RESULTS'}
         </h2>
 
@@ -156,15 +157,18 @@ export default function Appointments() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           {nearby.map((h, i) => (
-            <div key={i} className="hospital-item bg-slate-900/60 hover:bg-slate-800/80 backdrop-blur-md border border-white/10 hover:border-cyan-500/40 rounded-2xl p-4 transition-all duration-200 shadow-md flex items-center justify-between"
+            <div key={i} className="hospital-item glass-card bg-slate-900/60 hover:bg-slate-800/80 backdrop-blur-md border border-white/10 hover:border-cyan-500/40 rounded-2xl p-4 transition-all duration-200 shadow-md flex items-center justify-between"
               onClick={() => setTargetPos(h.coords)} // 👈 THIS MAKES IT ZOOM
               style={{ padding: '16px', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-              <div className="text-slate-100 font-semibold text-sm tracking-wide" style={{ fontSize: '0.9rem' }}>{h.name}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span className="icon-badge" aria-hidden="true">+</span>
+                <div className="text-slate-100 font-semibold text-sm tracking-wide" style={{ fontSize: '0.9rem' }}>{h.name}</div>
+              </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
                 <span className="text-emerald-400 text-xs font-mono" style={{ fontSize: '0.7rem' }}>{h.dist?.toFixed(1)} km</span>
                 <button onClick={(e) => { e.stopPropagation(); setBookingHospital(h); }}
-                  className="px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500 hover:to-blue-600 text-cyan-300 hover:text-white border border-cyan-500/30 text-xs font-medium rounded-xl transition-all shadow-sm"
+                  className="btn-gradient-pill"
                   style={{ color: '#67E8F9', padding: '8px 16px', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 500 }}>
                   BOOK NOW
                 </button>
@@ -176,7 +180,7 @@ export default function Appointments() {
       </div>
 
       {/* 🗺️ MAP CANVAS */}
-      <div className="glass-card radar-map-panel flex-1 h-full min-h-[500px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative bg-slate-900/40 backdrop-blur-xl" style={{ flex: 1, width: 'auto', height: '100%', minHeight: '500px' }}>
+      <div className="glass-card radar-map-panel flex-1 h-full min-h-[500px] rounded-3xl overflow-hidden border border-cyan-400/40 shadow-[0_0_40px_rgba(56,189,248,0.25)] relative bg-slate-900/40 backdrop-blur-xl" style={{ flex: 1, width: 'auto', height: '100%', minHeight: '500px' }}>
         <MapContainer className="w-full h-full" center={DEFAULT_MAP_CENTER} zoom={15} style={{ width: '100%', height: '100%' }} zoomControl={false}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

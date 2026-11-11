@@ -41,7 +41,7 @@ export default function BookingModal({ hospital, onClose }: BookingModalProps) {
             <div style={{ fontSize: '3rem', marginBottom: '20px' }}>✅</div>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#00E676' }}>CONFIRMED</h2>
             <p style={{ color: '#94A3B8', margin: '20px 0' }}>Your token #42 for <strong>{hospital.name}</strong> has been secured.</p>
-            <button onClick={onClose} style={{ width: '100%', padding: '15px', background: '#3D5AFE', color: 'white', borderRadius: '12px', border: 'none', fontWeight: 'bold', cursor: 'pointer' }}>CLOSE VAULT</button>
+            <button onClick={onClose} className="btn-gradient-pill" style={{ width: '100%', justifyContent: 'center' }}>CLOSE VAULT</button>
           </div>
         )}
 
