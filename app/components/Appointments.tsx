@@ -175,11 +175,11 @@ export default function Appointments() {
       </div>
 
       {/* 🗺️ MAP CANVAS */}
-      <div className="glass-card radar-map-panel flex-1 h-full min-h-[500px] bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden relative" style={{ flex: 1, width: 'auto', height: '100%', minHeight: '500px' }}>
-        <MapContainer className="w-full h-full min-h-full z-0" center={ANCHOR_BAHADURABAD} zoom={13} style={{ height: '100%', width: '100%' }} zoomControl={false}>
+      <div className="glass-card radar-map-panel flex-1 h-full min-h-[550px] bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden relative" style={{ flex: 1, width: 'auto', height: '100%', minHeight: '550px' }}>
+        <MapContainer className="w-full h-full min-h-full z-0" center={ANCHOR_BAHADURABAD} zoom={13} style={{ width: '100%', height: '100%' }} zoomControl={false}>
           <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           />
           {nearby.map((h, i) => (
             <Marker key={i} position={h.coords as [number, number]} icon={sovereignIcon}>
@@ -212,12 +212,12 @@ export default function Appointments() {
         .leaflet-container { background: #0A0E1A; font-family: var(--font-product-sans), sans-serif; }
         .radar-layout { box-sizing: border-box; }
         .radar-sidebar { box-sizing: border-box; }
-        .radar-map-panel { box-sizing: border-box; }
+        .radar-map-panel { box-sizing: border-box; min-height: 550px; }
         .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(148, 163, 184, 0.45) transparent; }
         @media (max-width: 1023px) {
           .radar-layout { height: auto; flex-direction: column !important; overflow-y: auto; }
           .radar-sidebar { width: 100% !important; height: auto; max-height: 420px; }
-          .radar-map-panel { width: 100%; min-height: 500px; height: 650px; flex: none; }
+          .radar-map-panel { width: 100%; min-height: 550px; height: 650px; flex: none; }
         }
         .radar-recalibrate {
           cursor: pointer;

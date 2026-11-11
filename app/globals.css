@@ -215,6 +215,10 @@ body {
   min-height: 500px;
 }
 
+.min-h-\[550px\] {
+  min-height: 550px;
+}
+
 .h-\[calc\(100vh-120px\)\] {
   height: calc(100vh - 120px);
 }
