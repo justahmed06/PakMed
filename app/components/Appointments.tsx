@@ -175,9 +175,12 @@ export default function Appointments() {
       </div>
 
       {/* 🗺️ MAP CANVAS */}
-      <div className="glass-card bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl p-6 map-container w-full h-[600px] overflow-hidden relative" style={{ width: '100%', height: '600px', flex: 'none', padding: 0 }}>
-        <MapContainer className="w-full h-full" center={ANCHOR_BAHADURABAD} zoom={13} style={{ height: '100%', width: '100%' }} zoomControl={false}>
-          <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+      <div className="glass-card w-full h-[650px] max-w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative bg-slate-900/40 backdrop-blur-xl map-container" style={{ width: '100%', height: '650px', flex: 'none' }}>
+        <MapContainer className="w-full h-full" center={ANCHOR_BAHADURABAD} zoom={13} style={{ width: '100%', height: '100%', minHeight: '600px' }} zoomControl={false}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
           {nearby.map((h, i) => (
             <Marker key={i} position={h.coords as [number, number]} icon={sovereignIcon}>
               <Popup className="glass-popup">{h.name}</Popup>
@@ -194,7 +197,7 @@ export default function Appointments() {
         </MapContainer>
         <button
           onClick={handleLocate}
-          className="absolute bottom-6 right-6 z-10 bg-slate-900/80 backdrop-blur-md border border-white/10 text-cyan-400 radar-recalibrate"
+          className="absolute bottom-6 right-6 z-[1000] bg-slate-900/80 backdrop-blur-md border border-white/20 text-cyan-400 font-semibold px-5 py-2.5 rounded-2xl shadow-lg radar-recalibrate"
         >
           <span>📍</span> RE-CALIBRATE GPS
         </button>
@@ -207,13 +210,9 @@ export default function Appointments() {
 
       <style jsx global>{`
         .leaflet-container { background: #0A0E1A; font-family: var(--font-product-sans), sans-serif; }
-        .map-container { width: 100%; height: 600px; }
+        .map-container { width: 100%; height: 650px; }
         .radar-recalibrate {
-          padding: 15px;
-          border-radius: 12px;
-          font-weight: bold;
           cursor: pointer;
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
         .hospital-item:hover { background: rgba(61,90,254,0.1) !important; transform: translateX(5px); border-color: #3D5AFE !important; }
       `}</style>

@@ -21,6 +21,30 @@ body {
   font-weight: 700;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+.text-cyan-400 {
+  color: rgb(34 211 238);
+}
+
+.text-slate-200 {
+  color: rgb(226 232 240);
+}
+
+.bg-slate-800\/50 {
+  background-color: rgb(30 41 59 / 0.5);
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
 .tracking-\[0\.2em\] {
   letter-spacing: 0.2em;
 }
@@ -31,6 +55,10 @@ body {
 
 .bg-slate-900\/40 {
   background-color: rgb(15 23 42 / 0.4);
+}
+
+.bg-slate-900\/60 {
+  background-color: rgb(15 23 42 / 0.6);
 }
 
 .bg-white\/\[0\.03\] {
@@ -107,6 +135,44 @@ body {
 
 .shadow-2xl {
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.max-w-full {
+  max-width: 100%;
+}
+
+.min-w-full {
+  min-width: 100%;
+}
+
+.h-\[650px\] {
+  height: 650px;
+}
+
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.z-\[1000\] {
+  z-index: 1000;
 }
 
 .shadow-\[0_16px_40px_rgba\(0\,0\,0\,0\.6\)\,inset_0_1px_1px_rgba\(255\,255\,255\,0\.2\)\] {
