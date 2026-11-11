@@ -37,7 +37,7 @@ export default function Diagnosis() {
             <span key={i} className="letter" style={{ animationDelay: `${i * 0.15}s` }}>{char}</span>
           ))}
         </h1>
-        <p className="who-text">WORLD HEALTH ORGANIZATION ACCREDITED</p>
+        <p className="who-text">WHO ICD-11 TAXONOMY COMPLIANT</p>
       </div>
 
       {/* 💬 PREMIUM GLASS PILL CONSOLE */}
