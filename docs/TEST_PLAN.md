@@ -17,6 +17,11 @@ Define verification for functional requirements, architecture, security, usabili
 ## 3. Environment
 Use isolated test data and mocked external services where practical. Never commit provider credentials or use real patient information in fixtures. Record browser, OS, runtime and dependency versions.
 
+### 3.1 Current automated baseline
+`npm test` runs the repository's focused Vitest suite. It covers current valid-input boundary behaviour for the pure vitals utilities and request-validation/failure responses from the placeholder diagnosis route. It does not validate clinical references, thresholds, emergency rules, clinical safety, or regulatory suitability.
+
+The existing vitals utilities normalize invalid inputs instead of exposing a documented rejection result. Invalid/non-finite vitals tests are therefore deliberately deferred pending an approved input-validation contract; passing valid-boundary tests must not be read as acceptance of that behavior.
+
 ## 4. Unit test suites
 
 ### Vitals
