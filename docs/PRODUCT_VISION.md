@@ -59,3 +59,9 @@ Measure correctness of deterministic logic, validated service contracts, safe fa
 
 ## 10. Related documents
 See [SRS](./SRS.md), [SDS](./SDS.md), [API Specification](./API_SPECIFICATION.md), [Test Plan](./TEST_PLAN.md), [Security & Privacy](./SECURITY_PRIVACY.md), [Clinical Safety](./CLINICAL_SAFETY.md) and [Deployment](./DEPLOYMENT.md).
+
+## 11. Roadmap: Phase 2 — Longitudinal Context
+
+A proposed next phase will allow users to opt in to maintaining timestamped health readings and patient-reported context over time, review deterministic trends, and prepare a user-approved pre-visit brief for a qualified clinician. AI may assist with clarification, terminology suggestions and concise drafting only; deterministic code owns calculations and escalation rules. The feature must not diagnose, prescribe or autonomously share records.
+
+This is a planned direction, not current functionality. It depends on a separate longitudinal data model, consent, secure persistence and key management, clinical review, verified terminology sources, and appropriate facility metadata. See [Phase 2 specification](./PHASE_2_LONGITUDINAL_CONTEXT.md).
