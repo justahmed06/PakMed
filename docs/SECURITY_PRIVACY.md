@@ -68,3 +68,15 @@ Review data flows to AI providers, OpenStreetMap tile services, Overpass, WhatsA
 
 ## 7. Production governance
 Prepare a privacy notice, data inventory, retention/deletion policy, third-party disclosure, incident-response procedure and review of applicable Pakistani legal/regulatory requirements. Do not claim compliance until assessed by qualified counsel or the relevant authority.
+
+## 8. Phase 2 data protection requirements — Planned
+
+Longitudinal health records materially increase sensitivity and must not be added to the current local session snapshot without a separate approved design.
+
+Before implementation, define explicit opt-in consent, data inventory, purpose limitation, minimization, retention, correction, export and deletion. Decide whether records are device-local or synchronized to an authenticated service. These are separate architectures.
+
+If encrypted local persistence is selected, use a reviewed Web Crypto/IndexedDB design with key creation, storage, recovery, rotation and loss behaviour. Do not store a decryption key beside ciphertext in a way that defeats the protection, and do not claim end-to-end encryption unless the implemented protocol provides it. Address XSS and compromised-device risks.
+
+If cloud sync is selected, require authenticated identity, per-record authorization, encrypted transport, access controls, conflict handling, deletion propagation, backup policy and incident response. Review each AI/taxonomy provider's retention, processing, region and training terms before transmitting health information. Provider keys remain server-side.
+
+A pre-visit brief must not be transmitted to a clinician or other third party without explicit user action and clear disclosure. See [Phase 2 specification](./PHASE_2_LONGITUDINAL_CONTEXT.md).
