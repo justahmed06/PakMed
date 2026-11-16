@@ -67,3 +67,17 @@ Before public AI-assisted functionality:
 
 ## 7. Change control
 Changes to thresholds, clinical copy, emergency triggers, prompts, response schemas or medicine information require impact assessment and regression tests. Record source and rationale for every clinical change.
+
+## 8. Phase 2 hazards and controls — Proposed
+
+| ID | Hazard | Required control |
+|---|---|---|
+| H-013 | Incorrect or misleading longitudinal trend | Deterministic, reviewed rules; source readings; explicit windows/sample requirements; insufficient-data state |
+| H-014 | Incorrect or stale patient history | Timestamped provenance, patient review/correction and confirmation dates |
+| H-015 | AI invents or misstates clinical context | Bounded drafting from validated fields; schema validation; user approval |
+| H-016 | Incorrect ICD-11 candidate treated as diagnosis | Authoritative taxonomy verification, version/provenance and visible uncertainty |
+| H-017 | Sensitive longitudinal record exposed | Consent, encryption/key management, authorization, minimization and deletion controls |
+| H-018 | Facility specialty/availability inferred incorrectly | Use only verified, maintained metadata; otherwise do not claim a match |
+| H-019 | Brief shared without informed approval | Explicit user review and action; no automatic sharing |
+
+Trend significance, clinical thresholds and emergency escalation must remain independent of AI and require qualified clinical review. A generated brief is a patient-reviewed information summary, not a diagnosis or clinician-reviewed record. The detailed Phase 2 safety and release requirements are in [Phase 2 specification](./PHASE_2_LONGITUDINAL_CONTEXT.md).
