@@ -120,3 +120,27 @@ A requirement is complete only when implementation and verification evidence exi
 
 ## 9. Traceability
 Use requirement IDs in test-case names or metadata. See [SDS](./SDS.md), [API Specification](./API_SPECIFICATION.md), [Test Plan](./TEST_PLAN.md) and [Clinical Safety](./CLINICAL_SAFETY.md).
+
+## 10. Phase 2 requirements — Planned, not implemented
+
+The following requirements are proposed and must not be treated as current acceptance claims.
+
+| ID | Requirement | Priority |
+|---|---|---|
+| FR-LON-001 | Maintain a separate, versioned longitudinal record model; do not repurpose `pakmed_session_v1`. | Must |
+| FR-LON-002 | Store selected readings with value, unit, context, timestamp, source and rule version. | Must |
+| FR-LON-003 | Allow explicit opt-in, review, correction, export and deletion of longitudinal data. | Must |
+| FR-LON-004 | Calculate trends deterministically with documented windows, sample requirements and insufficient-data states. | Must |
+| FR-LON-005 | Keep clinical significance thresholds and emergency escalation independent of AI. | Must |
+| FR-LON-006 | Collect patient-confirmed medication and lifestyle context with review dates. | Must |
+| FR-LON-007 | Generate a schema-validated draft pre-visit brief from selected, validated data. | Must |
+| FR-LON-008 | Require user review and approval before export or sharing; never share automatically. | Must |
+| FR-LON-009 | Treat ICD-11 suggestions as unverified until checked against the authoritative, versioned taxonomy. | Must |
+| FR-LON-010 | Provide secure persistence with documented encryption, key management, retention and deletion. | Must |
+| FR-LON-011 | Match facilities to specialties/schedules only from verified, maintained metadata. | Must if matching is offered |
+
+The existing `POST /api/diagnose` route exists but currently returns hardcoded placeholder responses; it is not a production AI integration. The clinical-brief endpoint is proposed and does not currently exist. See [Phase 2 specification](./PHASE_2_LONGITUDINAL_CONTEXT.md).
+
+## 11. API/provider integration approach
+
+Provider selection is intentionally open. Implement server-side provider adapters behind stable application interfaces. Keep credentials in deployment secrets, validate requests and responses, apply timeouts/rate limits, and review provider data retention and processing terms before sending health information. The application must degrade safely when no provider is configured.

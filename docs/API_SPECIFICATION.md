@@ -89,3 +89,25 @@ Test valid request/response, missing fields, invalid enums, out-of-range values,
 
 ## 10. Versioning
 The initial route is internal. If external consumers are introduced, define explicit versioning and backward-compatibility rules before publishing it.
+
+## 11. Observed route status
+
+The repository currently contains `POST /api/diagnose`. Its implementation validates a request and returns hardcoded placeholder responses, including simple keyword-based emergency matching. It does not currently call an AI provider. Therefore, the provider lifecycle above is a target contract, not a description of current runtime behaviour.
+
+No `/api/clinical-brief` or `/api/clinical-brief/follow-up` route currently exists.
+
+## 12. Proposed Phase 2 contracts — Not implemented
+
+### POST /api/clinical-brief/follow-up
+
+Accept only a minimal, user-approved context snapshot and return neutral clarification questions. The server must not infer missing clinical facts or make autonomous clinical decisions.
+
+### POST /api/clinical-brief
+
+Accept validated, selected readings, patient-confirmed context and deterministic trend results. Return a structured draft brief for user review. It must preserve provenance, dates, units, uncertainty and calculation/reference versions. The user must approve the complete brief before export or sharing.
+
+### ICD-11 terminology adapter
+
+Use an authoritative, versioned taxonomy source. Store candidate identifier, display term, taxonomy version, source and verification status. AI suggestions remain unverified until checked; do not represent a candidate as a diagnosis.
+
+Provider selection remains configurable behind server-side adapters. Keep provider credentials server-side, minimize transmitted health data, enforce authentication/authorization when records are cloud-hosted, and fail closed on provider or taxonomy failure. Detailed requirements: [Phase 2 specification](./PHASE_2_LONGITUDINAL_CONTEXT.md).

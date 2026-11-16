@@ -133,3 +133,13 @@ Never expose stack traces, secrets or provider internals to clients.
 
 ## 10. Design verification
 The design is acceptable when domain logic is independently testable, external failures are isolated, contracts are enforced, local features work without remote services and deployment compatibility is demonstrated. See [Test Plan](./TEST_PLAN.md).
+
+## 11. Implementation status clarification
+
+The repository contains `app/api/diagnose/route.ts`, but its current behaviour is a basic placeholder using hardcoded responses and keyword-based emergency matching. It does not call an external AI provider. The target provider-adapter flow described above is not yet implemented end-to-end. No `app/api/clinical-brief/route.ts` currently exists.
+
+## 12. Phase 2 target architecture — Planned
+
+Add a separate longitudinal-record domain and repository boundary, deterministic trend engine, patient-context confirmation workflow, bounded AI brief-drafting adapter, ICD-11 terminology adapter and user-reviewed export workflow. Keep the current session store separate. Cloud persistence, local encrypted storage and cross-device sync are distinct design options and require explicit consent, authorization and key-management decisions before implementation.
+
+Do not allow the LLM to calculate vitals, determine trend significance, control emergency escalation, infer medication adherence or verify facility specialties. The complete proposed design is in [Phase 2 specification](./PHASE_2_LONGITUDINAL_CONTEXT.md).

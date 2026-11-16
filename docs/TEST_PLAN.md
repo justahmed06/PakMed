@@ -89,3 +89,21 @@ Mandatory release requirements have passing evidence; no unresolved critical def
 
 ## 10. Evidence
 Retain test command, environment, date, result, relevant logs and linked requirement IDs. Avoid real user health data in test artifacts.
+
+## 11. Phase 2 verification — Planned
+
+Do not mark these tests complete until the corresponding feature exists.
+
+- Longitudinal record schema, version migration, correction, export and deletion.
+- Timestamp/timezone, unit, measurement-context, duplicate and out-of-order handling.
+- Trend calculations for sparse, irregular, missing and contradictory readings; minimum sample rules and insufficient-data states.
+- Rounding-sensitive calculations and reference-version traceability.
+- Medication/lifestyle context edits, confirmation dates and stale-context handling.
+- AI prompt injection, invented fields, invalid JSON/schema, timeout and provider-not-configured cases.
+- ICD-11 candidate provenance, taxonomy version and unverified/verified state.
+- User review/approval before export; assert no automatic sharing occurs.
+- Encryption, key recovery/loss, authorization, sync conflicts and deletion propagation if those capabilities are implemented.
+- Emergency scenarios proving AI cannot suppress or delay deterministic escalation.
+- Facility matching with verified, unverified and missing specialty/schedule metadata.
+
+See [Phase 2 specification](./PHASE_2_LONGITUDINAL_CONTEXT.md) for acceptance boundaries and release gates.
