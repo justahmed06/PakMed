@@ -25,6 +25,18 @@ AI_PROVIDER_MODEL=
 ```
 Configure secrets through the hosting platform. Never commit real values, expose them through public-prefixed variables or include them in client bundles. Use separate preview and production credentials.
 
+## 4.1 CI/CD status and deployment authorization
+The repository's pull-request workflow is documented in [CI/CD](./CI_CD.md).
+It performs only locked dependency installation, linting and a production build;
+it has no deployment credentials or write permissions. This does not constitute
+deployment or release evidence.
+
+Do not add automated preview or production deployment until the Cloudflare
+project, account, adapter, build/output configuration, environment separation,
+least-privilege credential model, release owner and rollback process have been
+verified and explicitly approved. Production deployment must use a protected
+GitHub environment with required reviewers.
+
 ## 5. Pre-deployment checklist
 - [ ] Install dependencies from the committed lockfile.
 - [ ] Run TypeScript checks.
