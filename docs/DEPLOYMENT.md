@@ -62,3 +62,13 @@ The UI must communicate unavailable functions rather than imply full offline cap
 
 ## 10. Release record
 For every production release record version/commit, date, environment, build/test results, known limitations, approvals, deployment outcome and rollback reference.
+
+## 11. Phase 2 deployment considerations — Planned
+
+Phase 2 may introduce new storage, encryption, identity, taxonomy and AI-provider dependencies. Do not provision or expose these services until the architecture and data flows are approved.
+
+For every external service, document its purpose, environment-specific endpoint, authentication method, secret name, quota, timeout, failure mode, data sent, retention/processing terms and monitoring. Keep credentials in hosting-platform secrets and separate preview/production credentials. Never put secrets in public-prefixed variables or client bundles.
+
+If cloud records are introduced, deployment must include authenticated access controls, database migrations, backups, restore testing, deletion propagation, audit controls and incident response. If encrypted local records are selected, document browser support, key lifecycle and recovery limitations. Validate Cloudflare runtime compatibility for every new dependency and API route.
+
+Do not enable production health-data transmission until privacy, security and clinical release gates are satisfied. See [Phase 2 specification](./PHASE_2_LONGITUDINAL_CONTEXT.md).
