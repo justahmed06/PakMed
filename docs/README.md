@@ -31,3 +31,14 @@ Documentation is not proof of implementation. Recheck status against source code
 - Geographic discovery is not provider verification.
 - A demonstration booking is not a real appointment.
 - A successful build is not proof of clinical safety.
+
+## Phase roadmap
+
+| Phase | Scope | Status |
+|---|---|---|
+| Phase 1 | Current-session vitals, symptom-information prototype, sample pharmacy catalog, facility discovery and demo appointment flow | Existing baseline; verify each capability against code |
+| Phase 2 | Opt-in longitudinal context and user-reviewed pre-visit clinical brief | Proposed; not implemented |
+
+See [Phase 2: Longitudinal Context & Pre-Visit Clinical Brief](./PHASE_2_LONGITUDINAL_CONTEXT.md) for scope, architecture, API boundaries, prerequisites and release gates.
+
+The current `/api/diagnose` route is a basic placeholder with hardcoded responses and emergency-keyword matching. It is not a connected AI-provider integration. A clinical-brief API route has not been implemented. API credentials and provider choices are future configuration decisions, not prerequisites for documenting provider-neutral interfaces.
