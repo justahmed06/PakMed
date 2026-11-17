@@ -2,9 +2,11 @@
 import React, { useState, useSyncExternalStore } from 'react';
 import {
   calculateAsianBmi,
+  centimetresToFeetInches,
   classifyBloodPressure,
   classifyGlucose,
   classifyHeartRate,
+  feetInchesToCentimetres,
 } from '@/lib/vitals';
 import {
   saveVitalsInputs,
@@ -116,6 +118,9 @@ export default function Vitals() {
     getServerSessionSnapshot,
   );
   const inputs = session.vitals;
+  const [heightUnit, setHeightUnit] = useState<'cm' | 'ft-in'>('cm');
+  const [heightDraft, setHeightDraft] = useState({ feet: '', inches: '' });
+  const [imperialDraftDirty, setImperialDraftDirty] = useState(false);
 
   // Update helper that writes synchronously to localStorage
   const updateMetric = <K extends keyof VitalsInputState>(
@@ -133,14 +138,90 @@ export default function Vitals() {
     resetSession();
   };
 
-  // Instant pure calculations
-  const bmiCalc = calculateAsianBmi(inputs.bmi.weightKg, inputs.bmi.heightCm);
-  const bpCalc = classifyBloodPressure(inputs.bp.systolic, inputs.bp.diastolic);
-  const glucoseCalc = classifyGlucose(
-    inputs.glucose.value,
-    inputs.glucose.context,
+  const feetValue = Number(heightDraft.feet);
+  const inchesValue = Number(heightDraft.inches);
+  let convertedDraftCm: number | null = null;
+  let conversionError = false;
+  const feetInchesFieldsValid = (
+    heightDraft.feet.trim() !== '' &&
+    heightDraft.inches.trim() !== '' &&
+    Number.isInteger(feetValue) && feetValue >= 0 &&
+    Number.isFinite(inchesValue) && inchesValue >= 0 && inchesValue < 12 &&
+    (feetValue > 0 || inchesValue > 0)
   );
-  const hrCalc = classifyHeartRate(inputs.hr.bpm);
+  if (feetInchesFieldsValid) {
+    try {
+      convertedDraftCm = feetInchesToCentimetres(feetValue, inchesValue);
+    } catch {
+      conversionError = true;
+    }
+  }
+  const imperialDraftInvalid = imperialDraftDirty && (!feetInchesFieldsValid || convertedDraftCm === null);
+  const bmiInputsValid = [inputs.bmi.weightKg, inputs.bmi.heightCm].every(
+    (value) => Number.isFinite(value) && value > 0,
+  );
+  const bmiValid = bmiInputsValid && !imperialDraftInvalid;
+  const bpValid = [inputs.bp.systolic, inputs.bp.diastolic].every(
+    (value) => Number.isFinite(value) && value > 0,
+  );
+  const glucoseValid = Number.isFinite(inputs.glucose.value) && inputs.glucose.value > 0;
+  const hrValid = Number.isFinite(inputs.hr.bpm) && inputs.hr.bpm > 0;
+
+  // Guard calculations so malformed numeric extremes produce feedback, not a render crash.
+  let bmiCalc = null as ReturnType<typeof calculateAsianBmi> | null;
+  let bmiCalculationError = false;
+  if (bmiValid) {
+    try {
+      bmiCalc = calculateAsianBmi(inputs.bmi.weightKg, inputs.bmi.heightCm);
+    } catch {
+      bmiCalculationError = true;
+    }
+  }
+  const bpCalc = bpValid ? classifyBloodPressure(inputs.bp.systolic, inputs.bp.diastolic) : null;
+  const glucoseCalc = glucoseValid
+    ? classifyGlucose(inputs.glucose.value, inputs.glucose.context)
+    : null;
+  const hrCalc = hrValid ? classifyHeartRate(inputs.hr.bpm) : null;
+  const neutralColor = '#94a3b8';
+
+  const changeHeightUnit = (unit: 'cm' | 'ft-in') => {
+    if (unit === 'ft-in' && !imperialDraftDirty && Number.isFinite(inputs.bmi.heightCm) && inputs.bmi.heightCm > 0) {
+      const converted = centimetresToFeetInches(inputs.bmi.heightCm);
+      setHeightDraft({ feet: String(converted.feet), inches: String(Number(converted.inches.toFixed(8))) });
+    }
+    setHeightUnit(unit);
+  };
+
+  const updateFeetInches = (next: { feet: string; inches: string }) => {
+    setHeightDraft(next);
+    setImperialDraftDirty(true);
+    const feet = Number(next.feet);
+    const inches = Number(next.inches);
+    if (
+      next.feet.trim() !== '' && next.inches.trim() !== '' &&
+      Number.isInteger(feet) && feet >= 0 &&
+      Number.isFinite(inches) && inches >= 0 && inches < 12 &&
+      (feet > 0 || inches > 0)
+    ) {
+      try {
+        updateMetric('bmi', {
+          ...inputs.bmi,
+          heightCm: feetInchesToCentimetres(feet, inches),
+        });
+        setImperialDraftDirty(false);
+      } catch {
+        // Keep the draft visible and invalid; feedback is derived during render.
+      }
+    }
+  };
+
+  const discardImperialDraft = () => {
+    setImperialDraftDirty(false);
+    if (Number.isFinite(inputs.bmi.heightCm) && inputs.bmi.heightCm > 0) {
+      const converted = centimetresToFeetInches(inputs.bmi.heightCm);
+      setHeightDraft({ feet: String(converted.feet), inches: String(Number(converted.inches.toFixed(8))) });
+    }
+  };
 
   return (
     <div className="vitals-wrapper">
@@ -160,14 +241,16 @@ export default function Vitals() {
         {/* 1. ADULT ASIAN BMI */}
         <MatrixCard
           label="BMI (ASIAN CRITERIA)"
-          value={bmiCalc.formatted}
-          status={bmiCalc.status}
-          color={bmiCalc.color}
-          subtitle={`${inputs.bmi.weightKg} kg / ${inputs.bmi.heightCm} cm (${bmiCalc.category})`}
+          value={bmiCalc?.formatted ?? '—'}
+          status={bmiCalc?.status ?? 'INVALID INPUT'}
+          color={bmiCalc?.color ?? neutralColor}
+          subtitle={bmiCalc
+            ? `${inputs.bmi.weightKg} kg / ${inputs.bmi.heightCm} cm (${bmiCalc.category})`
+            : 'Enter positive finite weight and height'}
           renderBack={(close) => (
             <div className="form-stack">
               <div className="input-group">
-                <label>WEIGHT (KG)</label>
+                <label htmlFor="bmi-weight-kg">WEIGHT (KG)</label>
                 <div className="stepper-row">
                   <button
                     type="button"
@@ -182,6 +265,7 @@ export default function Vitals() {
                     –
                   </button>
                   <input
+                    id="bmi-weight-kg"
                     type="number"
                     step="0.5"
                     min="20"
@@ -211,7 +295,15 @@ export default function Vitals() {
               </div>
 
               <div className="input-group">
-                <label>HEIGHT (CM)</label>
+                <label>HEIGHT UNITS</label>
+                <div className="toggle-group">
+                  <button type="button" className={`toggle-btn ${heightUnit === 'ft-in' ? 'active' : ''}`} onClick={() => changeHeightUnit('ft-in')}>FEET &amp; INCHES</button>
+                  <button type="button" className={`toggle-btn ${heightUnit === 'cm' ? 'active' : ''}`} onClick={() => changeHeightUnit('cm')}>CENTIMETRES</button>
+                </div>
+              </div>
+
+              {heightUnit === 'cm' ? <div className="input-group">
+                <label htmlFor="bmi-height-cm">HEIGHT (CM)</label>
                 <div className="stepper-row">
                   <button
                     type="button"
@@ -226,15 +318,14 @@ export default function Vitals() {
                     –
                   </button>
                   <input
+                    id="bmi-height-cm"
                     type="number"
                     step="1"
-                    min="50"
-                    max="250"
                     value={inputs.bmi.heightCm}
                     onChange={(e) =>
                       updateMetric('bmi', {
                         ...inputs.bmi,
-                        heightCm: parseInt(e.target.value, 10) || 0,
+                        heightCm: Number(e.target.value) || 0,
                       })
                     }
                     className="vault-field"
@@ -252,10 +343,34 @@ export default function Vitals() {
                     +
                   </button>
                 </div>
-              </div>
+              </div> : <div className="dual-inputs">
+                <div className="input-group">
+                  <label htmlFor="bmi-height-feet">HEIGHT (FEET)</label>
+                  <input id="bmi-height-feet" type="number" min="0" step="1" value={heightDraft.feet} onChange={(e) => updateFeetInches({ ...heightDraft, feet: e.target.value })} className="vault-field" />
+                </div>
+                <div className="input-group">
+                  <label htmlFor="bmi-height-inches">HEIGHT (INCHES, 0–&lt;12)</label>
+                  <input id="bmi-height-inches" type="number" min="0" step="any" value={heightDraft.inches} onChange={(e) => updateFeetInches({ ...heightDraft, inches: e.target.value })} className="vault-field" />
+                </div>
+              </div>}
 
-              <div className="calc-preview" style={{ color: bmiCalc.color }}>
-                Output: {bmiCalc.formatted} kg/m² • {bmiCalc.category}
+              {imperialDraftInvalid && heightUnit === 'cm' && (
+                <div className="calc-preview" role="alert">
+                  The unfinished feet-and-inches height is still invalid. Return to feet and inches to correct it, or discard that draft to use the last saved centimetre height.
+                  <button type="button" className="confirm-btn" onClick={discardImperialDraft}>DISCARD FEET &amp; INCHES DRAFT</button>
+                </div>
+              )}
+
+              <div className="calc-preview" style={{ color: bmiCalc?.color ?? neutralColor }} role="status" aria-live="polite">
+                {bmiCalc
+                  ? `Output: ${bmiCalc.formatted} kg/m² • ${bmiCalc.category}`
+                  : imperialDraftInvalid
+                    ? conversionError
+                      ? 'This feet-and-inches value cannot convert to a finite positive centimetre height. Correct the fields.'
+                      : 'Enter whole non-negative feet and inches from zero to less than twelve; total height must be greater than zero.'
+                    : bmiCalculationError
+                      ? 'These measurements cannot produce a finite positive BMI. Correct the height or weight.'
+                      : 'Enter a finite weight and height greater than zero to calculate BMI.'}
               </div>
 
               <button type="button" className="confirm-btn" onClick={close}>
@@ -268,10 +383,10 @@ export default function Vitals() {
         {/* 2. BLOOD PRESSURE */}
         <MatrixCard
           label="BLOOD PRESSURE"
-          value={bpCalc.formatted}
-          status={bpCalc.status}
-          color={bpCalc.color}
-          subtitle={`AHA/ACC: ${bpCalc.stage}`}
+          value={bpCalc?.formatted ?? '—'}
+          status={bpCalc?.status ?? 'INVALID INPUT'}
+          color={bpCalc?.color ?? neutralColor}
+          subtitle={bpCalc ? `AHA/ACC: ${bpCalc.stage}` : 'Enter positive finite readings'}
           renderBack={(close) => (
             <div className="form-stack">
               <div className="dual-inputs">
@@ -310,8 +425,10 @@ export default function Vitals() {
                 </div>
               </div>
 
-              <div className="calc-preview" style={{ color: bpCalc.color }}>
-                Staging: {bpCalc.stage} ({bpCalc.status})
+              <div className="calc-preview" style={{ color: bpCalc?.color ?? neutralColor }} role="status" aria-live="polite">
+                {bpCalc
+                  ? `Staging: ${bpCalc.stage} (${bpCalc.status})`
+                  : 'Enter finite systolic and diastolic values greater than zero to classify.'}
               </div>
 
               <button type="button" className="confirm-btn" onClick={close}>
@@ -324,10 +441,12 @@ export default function Vitals() {
         {/* 3. GLUCOSE LEVEL */}
         <MatrixCard
           label="BLOOD GLUCOSE"
-          value={glucoseCalc.formatted}
-          status={glucoseCalc.status}
-          color={glucoseCalc.color}
-          subtitle={`${inputs.glucose.context.toUpperCase()}: ${glucoseCalc.category} mg/dL`}
+          value={glucoseCalc?.formatted ?? '—'}
+          status={glucoseCalc?.status ?? 'INVALID INPUT'}
+          color={glucoseCalc?.color ?? neutralColor}
+          subtitle={glucoseCalc
+            ? `${inputs.glucose.context.toUpperCase()}: ${glucoseCalc.category} mg/dL`
+            : 'Enter a positive finite glucose reading'}
           renderBack={(close) => (
             <div className="form-stack">
               <div className="input-group">
@@ -381,8 +500,10 @@ export default function Vitals() {
                 />
               </div>
 
-              <div className="calc-preview" style={{ color: glucoseCalc.color }}>
-                Classification: {glucoseCalc.category} ({glucoseCalc.status})
+              <div className="calc-preview" style={{ color: glucoseCalc?.color ?? neutralColor }} role="status" aria-live="polite">
+                {glucoseCalc
+                  ? `Classification: ${glucoseCalc.category} (${glucoseCalc.status})`
+                  : 'Enter a finite glucose value greater than zero to classify.'}
               </div>
 
               <button type="button" className="confirm-btn" onClick={close}>
@@ -395,10 +516,12 @@ export default function Vitals() {
         {/* 4. HEART RATE */}
         <MatrixCard
           label="HEART RATE"
-          value={hrCalc.formatted}
-          status={hrCalc.status}
-          color={hrCalc.color}
-          subtitle={`PULSE: ${inputs.hr.bpm} BPM (${hrCalc.category})`}
+          value={hrCalc?.formatted ?? '—'}
+          status={hrCalc?.status ?? 'INVALID INPUT'}
+          color={hrCalc?.color ?? neutralColor}
+          subtitle={hrCalc
+            ? `PULSE: ${inputs.hr.bpm} BPM (${hrCalc.category})`
+            : 'Enter a positive finite pulse'}
           renderBack={(close) => (
             <div className="form-stack">
               <div className="input-group">
@@ -441,8 +564,10 @@ export default function Vitals() {
                 </div>
               </div>
 
-              <div className="calc-preview" style={{ color: hrCalc.color }}>
-                Output: {hrCalc.status} ({hrCalc.category})
+              <div className="calc-preview" style={{ color: hrCalc?.color ?? neutralColor }} role="status" aria-live="polite">
+                {hrCalc
+                  ? `Output: ${hrCalc.status} (${hrCalc.category})`
+                  : 'Enter a finite heart rate greater than zero to classify.'}
               </div>
 
               <button type="button" className="confirm-btn" onClick={close}>

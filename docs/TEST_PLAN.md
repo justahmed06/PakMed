@@ -20,18 +20,20 @@ Use isolated test data and mocked external services where practical. Never commi
 ### 3.1 Current automated baseline
 `npm test` runs the repository's focused Vitest suite. It covers current valid-input boundary behaviour for the pure vitals utilities and request-validation/failure responses from the placeholder diagnosis route. It does not validate clinical references, thresholds, emergency rules, clinical safety, or regulatory suitability.
 
-The existing vitals utilities normalize invalid inputs instead of exposing a documented rejection result. Invalid/non-finite vitals tests are therefore deliberately deferred pending an approved input-validation contract; passing valid-boundary tests must not be read as acceptance of that behavior.
+The vitals utilities reject non-finite, zero, and negative measurements. They do not enforce undocumented clinical plausibility ranges. The UI must withhold classification and explain which positive finite values are required.
+
+The BMI component tests cover metric arithmetic overflow/underflow feedback, imperial conversion overflow, incomplete imperial drafts across unit changes, explicit draft discard, and recovery after correction. Height is stored in centimetres; switching units alone must not rewrite the stored measurement.
 
 ## 4. Unit test suites
 
 ### Vitals
-BMI: typical values, all category boundaries, values immediately below/above boundaries, invalid/non-finite values and rounding-sensitive cases. Verify classification uses intended unrounded values.
+BMI: typical values, all category boundaries, values immediately below/above boundaries, zero/negative/non-finite rejection, finite inputs that overflow/underflow arithmetic, metric/imperial conversion and round-trip preservation, incomplete-draft unit switching, explicit discard, correction recovery and rounding-sensitive cases. Verify classification uses the existing calculation behavior.
 
-Blood pressure: normal/elevated/stage boundaries, exact boundary values, systolic/diastolic disagreement, invalid readings and severe-reading handling.
+Blood pressure: normal/elevated/stage boundaries, exact boundary values, systolic/diastolic disagreement, zero/negative/non-finite rejection and severe-reading handling.
 
-Glucose: fasting and post-meal contexts, low/normal/high ranges, supported units/conversion, unknown context and boundary values.
+Glucose: fasting and post-meal contexts, low/normal/high ranges, zero/negative/non-finite rejection, supported units/conversion, unknown context and boundary values.
 
-Heart rate: supported resting adult ranges, boundaries, missing/non-finite values and documented scope.
+Heart rate: supported resting adult ranges, boundaries, zero/negative/non-finite rejection and documented scope.
 
 Expected values must come from the approved clinical reference register.
 

@@ -58,6 +58,36 @@ export interface HrResult {
   readonly formatted: string;
 }
 
+export interface FeetInches {
+  readonly feet: number;
+  readonly inches: number;
+}
+
+export function feetInchesToCentimetres(feet: number, inches: number): number {
+  if (!Number.isInteger(feet) || feet < 0) {
+    throw new RangeError("Feet must be a non-negative whole number.");
+  }
+  if (!Number.isFinite(inches) || inches < 0 || inches >= 12) {
+    throw new RangeError("Inches must be a finite number from zero to less than twelve.");
+  }
+  const heightCm = (feet * 12 + inches) * 2.54;
+  requirePositiveFinite(heightCm, "Height");
+  return heightCm;
+}
+
+export function centimetresToFeetInches(heightCm: number): FeetInches {
+  requirePositiveFinite(heightCm, "Height");
+  const totalInches = heightCm / 2.54;
+  const feet = Math.floor(totalInches / 12);
+  return { feet, inches: totalInches - feet * 12 };
+}
+
+function requirePositiveFinite(value: number, name: string): void {
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new RangeError(`${name} must be a finite number greater than zero.`);
+  }
+}
+
 // ── Pure Clinical Calculations ──────────────────────────────────────────────
 
 /**
@@ -73,19 +103,14 @@ export interface HrResult {
  * @param heightCm Patient height in centimetres (> 0)
  */
 export function calculateAsianBmi(weightKg: number, heightCm: number): BmiResult {
-  if (weightKg <= 0 || heightCm <= 0) {
-    return {
-      bmi: 0,
-      category: "Normal",
-      status: "NORMAL",
-      color: "#00E5FF",
-      formatted: "0.0",
-    };
-  }
+  requirePositiveFinite(weightKg, "Weight");
+  requirePositiveFinite(heightCm, "Height");
 
   const heightM = heightCm / 100;
   const rawBmi = weightKg / (heightM * heightM);
+  requirePositiveFinite(rawBmi, "Calculated BMI");
   const bmi = Math.round(rawBmi * 10) / 10;
+  requirePositiveFinite(bmi, "Calculated BMI");
 
   if (bmi < 18.5) {
     return {
@@ -140,6 +165,8 @@ export function classifyBloodPressure(
   systolic: number,
   diastolic: number,
 ): BpResult {
+  requirePositiveFinite(systolic, "Systolic pressure");
+  requirePositiveFinite(diastolic, "Diastolic pressure");
   const safeSys = Math.max(0, Math.round(systolic));
   const safeDia = Math.max(0, Math.round(diastolic));
   const formatted = `${safeSys}/${safeDia}`;
@@ -217,6 +244,7 @@ export function classifyGlucose(
   value: number,
   context: GlucoseContext = "postprandial",
 ): GlucoseResult {
+  requirePositiveFinite(value, "Glucose");
   const safeVal = Math.max(0, Math.round(value));
   const formatted = `${safeVal}`;
 
@@ -309,6 +337,7 @@ export function classifyGlucose(
  *  • Elevated (Tachycardia): > 100 bpm
  */
 export function classifyHeartRate(bpm: number): HrResult {
+  requirePositiveFinite(bpm, "Heart rate");
   const safeBpm = Math.max(0, Math.round(bpm));
   const formatted = `${safeBpm}`;
 
