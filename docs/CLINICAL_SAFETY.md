@@ -68,6 +68,9 @@ Before public AI-assisted functionality:
 ## 7. Change control
 Changes to thresholds, clinical copy, emergency triggers, prompts, response schemas or medicine information require impact assessment and regression tests. Record source and rationale for every clinical change.
 
+### Vitals input validation
+The deterministic vitals helpers reject measurements that are not finite numbers greater than zero. They do not add upper/lower clinical plausibility limits; no such bounds are approved in this reference register. The UI withholds the classification and displays validation feedback until all required measurements are valid. Existing positive-value rounding and categories remain as implemented and still require the clinical reference review above.
+
 ## 8. Phase 2 hazards and controls — Proposed
 
 | ID | Hazard | Required control |

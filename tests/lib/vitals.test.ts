@@ -2,12 +2,63 @@ import { describe, expect, it } from "vitest";
 
 import {
   calculateAsianBmi,
+  centimetresToFeetInches,
   classifyBloodPressure,
   classifyGlucose,
   classifyHeartRate,
+  feetInchesToCentimetres,
 } from "@/lib/vitals";
 
 describe("vitals utilities", () => {
+  describe("height unit conversion", () => {
+    it("converts feet and inches using the exact inch-to-centimetre factor", () => {
+      expect(feetInchesToCentimetres(5, 8)).toBeCloseTo(172.72, 10);
+    });
+
+    it("preserves the physical height when switching units and back", () => {
+      const centimetres = 170.25;
+      const imperial = centimetresToFeetInches(centimetres);
+
+      expect(feetInchesToCentimetres(imperial.feet, imperial.inches)).toBeCloseTo(centimetres, 10);
+    });
+
+    it.each([-1, 12, Number.NaN, Number.POSITIVE_INFINITY])(
+      "rejects inches outside [0, 12): %s",
+      (inches) => expect(() => feetInchesToCentimetres(5, inches)).toThrow(RangeError),
+    );
+
+    it("rejects non-integer feet and zero total height", () => {
+      expect(() => feetInchesToCentimetres(5.5, 0)).toThrow(RangeError);
+      expect(() => feetInchesToCentimetres(0, 0)).toThrow(RangeError);
+    });
+  });
+
+  const invalidMeasurements = [0, -1, Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];
+
+  it.each(invalidMeasurements)("rejects invalid BMI weight %s", (weight) => {
+    expect(() => calculateAsianBmi(weight, 170)).toThrow(RangeError);
+  });
+
+  it.each(invalidMeasurements)("rejects invalid BMI height %s", (height) => {
+    expect(() => calculateAsianBmi(70, height)).toThrow(RangeError);
+  });
+
+  it.each(invalidMeasurements)("rejects invalid systolic pressure %s", (value) => {
+    expect(() => classifyBloodPressure(value, 80)).toThrow(RangeError);
+  });
+
+  it.each(invalidMeasurements)("rejects invalid diastolic pressure %s", (value) => {
+    expect(() => classifyBloodPressure(120, value)).toThrow(RangeError);
+  });
+
+  it.each(invalidMeasurements)("rejects invalid glucose %s", (value) => {
+    expect(() => classifyGlucose(value)).toThrow(RangeError);
+  });
+
+  it.each(invalidMeasurements)("rejects invalid heart rate %s", (value) => {
+    expect(() => classifyHeartRate(value)).toThrow(RangeError);
+  });
+
   describe("calculateAsianBmi", () => {
     it("preserves the current adult BMI category boundaries", () => {
       const cases = [
@@ -29,6 +80,11 @@ describe("vitals utilities", () => {
 
       expect(result.bmi).toBe(22.9);
       expect(result.formatted).toBe("22.9");
+    });
+
+    it("rejects finite measurements whose BMI arithmetic underflows or overflows", () => {
+      expect(() => calculateAsianBmi(70, Number.MIN_VALUE)).toThrow(RangeError);
+      expect(() => calculateAsianBmi(Number.MAX_VALUE, 100)).toThrow(RangeError);
     });
   });
 
